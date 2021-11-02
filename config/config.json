@@ -1,9 +1,0 @@
-{
-  "development": {
-    "username": "hwgqdazb",
-    "password": "L1CkZYQ85C7IwsbCYuNtTZGkdCojMO2s",
-    "database": "hwgqdazb",
-    "host": "fanny.db.elephantsql.com",
-    "dialect": "postgres"
-  }
-}
