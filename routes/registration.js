@@ -13,11 +13,7 @@ router.get('/registration', (req,res) => {
 router.post('/registration', async (req,res) => {
     try{
         let {username, email, password} = req.body
-
         passwordEncrypted = bcrypt.hashSync(password, 8); 
-
-        console.log('inside post');
-
         await db.users.create({
             username: username, 
             email: email, 
