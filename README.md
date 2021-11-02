@@ -1,8 +1,8 @@
 # birDB
 A birdwatching journal and social media. 
 - Learn about birds sighted in your region.
-- Add field notes and images to your personal birdwatching journal
-- Share your sightings with others
+- Add field notes and images to your personal birdwatching journal.
+- Share your sightings with others.
 - Chat with others who have similar interests!
 
 [Landing Page Screenshot Here]
