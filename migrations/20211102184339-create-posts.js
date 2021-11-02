@@ -35,9 +35,6 @@ module.exports = {
       likes: {
         type: Sequelize.INTEGER
       },
-      comments: {
-        type: Sequelize.STRING
-      },
       userID: {
         type: Sequelize.INTEGER,
         references: {

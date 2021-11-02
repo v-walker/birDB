@@ -3,3 +3,5 @@
 # sequelize model:generate --name users --attributes username:string,email:string,password:string,roleName:string
 
 # sequelize model:generate --name posts --attributes title:string,commonName:string,scientificName:string,location:string,precipitation:string,temperature:string,cloudCover:string,observation:string,userID:integer
+
+sequelize model:generate --name comments --attributes postID:integer,userName:string,contents:string,likes:integer
