@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const socket = require('socket.io');
 const PORT = process.env.PORT || 3000;
 const cookieSession = require('cookie-session');
-// const { find } = require('async');
+const { find } = require('async');
 const passport = require('passport');
 require('./auth/passport-config')(passport);
 
@@ -17,6 +17,7 @@ app.use(cookieSession({
     keys:['CaptainJacobKeyes'],
     maxAge: 14*24*60*60*1000
 }))
+
 
 
 app.use(express.urlencoded({extended: false}))
