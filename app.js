@@ -30,6 +30,7 @@ app.use(require('./routes/about'))
 app.use(require('./routes/chat'))
 app.use(require('./routes/404'))
 app.use(require('./routes/login'))
+app.use(require('./routes/registration'))
 
 
 
