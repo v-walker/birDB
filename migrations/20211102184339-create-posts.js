@@ -32,8 +32,18 @@ module.exports = {
       observation: {
         type: Sequelize.STRING
       },
-      userID: {
+      likes: {
         type: Sequelize.INTEGER
+      },
+      comments: {
+        type: Sequelize.STRING
+      },
+      userID: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
