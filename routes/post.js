@@ -19,27 +19,28 @@ router.get("/post/:postID", async (req, res) => {
     res.json(data);
 });
 
-// router.put('/post/:postID', async (req, res) => {
-//     let postID = req.params.postID;
+router.put('/post/:postID', async (req, res) => {
+    let postID = req.params.postID;
 
-//     // pulling updated information from edit
-//     let {title, observation, imgURL} = req.body;
-//     await db.posts.update({title: title, observation: observation, imgURL: imgURL}, {where: {id: postID}});
+    // pulling updated information from edit
+    let {title, observation, imgURL} = req.body;
+    await db.posts.update({title: title, observation: observation, imgURL: imgURL}, {where: {id: postID}});
 
-//     let post = await db.posts.findByPk(postID);
-//     let comments = await db.comments.findAll({where: {postID: postID}});
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
 
-//     res.json(post, comments)
-// });
+    let data = [post, comments]
 
-// router.delete('/post/:postID', async (req, res) => {
-//     let postID = req.params.postID;
+    res.json(data)
+});
 
-//     // Check session ID; if match, allow to delete, else error
-//     await db.posts.destroy({where: {id: postID}});
-//     // redirect to home/landing page
-//     res.redirect('/');
-// });
+router.delete('/post/:postID', async (req, res) => {
+    let postID = req.params.postID;
+
+    await db.posts.destroy({where: {id: postID}});
+    // redirect to home/landing page
+    res.redirect('/');
+});
 
 // router.post('/post/:postID', async (req, res) => {
 //     let postID = req.params.postID;
