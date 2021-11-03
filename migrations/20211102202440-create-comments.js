@@ -15,8 +15,12 @@ module.exports = {
           key: 'id'
         }
       },
-      userName: {
-        type: Sequelize.STRING
+      username: {
+        type: Sequelize.STRING,
+        references: {
+          model: 'users',
+          key: 'username'
+        }
       },
       contents: {
         type: Sequelize.STRING
