@@ -16,18 +16,19 @@ router.get("/post/:postID", async (req, res) => {
     // data structure??? [{}, {}]
 
     res.json(post, comments);
-})
-
+});
 
 router.put('/post/:postID', (req, res) => {
     let postID = req.params.postID;
 
-    // query db for postID;
-    
-    let post = await db.posts.findByPk(postID);
-    // check sessionID is valid for user
-    // if sessionID matches userID for post, then allow for editing; else, error
+    // pulling updated information from edit
+    let {title, observation, imgURL} = req.body;
+    await db.posts.update({title: title, observation: observation, imgURL: imgURL}, {where: {id: postID}});
 
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
+
+    res.json(post, comments)
 });
 
 router.delete('/post/:postID', (req, res) => {
@@ -46,18 +47,35 @@ router.post('/post/:postID', (req, res) => {
     // allow to post new comment to db (associated with a post)
     await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
     
-    let records = await db.comments.findAll({where: {postID: postID}});
-    res.json(records);
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
+
+    res.json(post, comments)
 });
 
+// editing comment
 router.put('/post/:commentID', (req, res) => {
     let commentID = req.params.commentID;
+    let {updatedContents, postID} = req.body;
 
-    // allow to edit comments associated with post
+    await db.comments.update({contents: updatedContents}, {where: {id: commentID}});
+
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
+
+    res.json(post, comments);
 });
 
 router.delete('/post/:commentID', (req, res) => {
+    let commentID = req.params.commentID;
+    let postID = req.body.postID
 
+    await db.comments.destroy({where: {id: commentID}});
+
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
+
+    res.json(post, comments);
 });
 
 module.exports = router;
