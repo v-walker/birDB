@@ -9,7 +9,7 @@ const init = (passport) => {
                 let record = records[0]
                 bcrypt.compare(password, record.password,(err,match) => {
                     if(match){
-                        return document(null,record);
+                        return done(null,record);
                     }else{
                         return done(null,false)
                     }
