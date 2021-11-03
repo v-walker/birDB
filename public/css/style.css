@@ -70,10 +70,35 @@ Table Of Index
  /*********************************************************************
  ==============Start All Reset Css==
  *********************************************************************/
-/* .container{
-	width: 100%;
+.wide{
+	width:100%;
+}
+.chat-text{
+	padding: 4px;;
+
+}
+.input-label-width{
+	width: 130px;
+}
+.buffer{
+	height: 30vh;
+}
+.text-green{
+	color: #027373;
+}
+.tall{
 	height:100%;
-} */
+}
+.bg-green{
+background-color: #027373;
+}
+.font{
+	font-family: 'Courier Prime', monospace;
+}
+text-white{
+	
+	color: white;
+}
  
  body {
  	font-family: 'Roboto', sans-serif;
