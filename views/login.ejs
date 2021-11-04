@@ -4,15 +4,63 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>birDB | Login</title>
+    <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
+	<link rel="stylesheet" type="text/css" href="/css/animate.min.css">
+	<link rel="stylesheet" href="/owl.carousel/owl.carousel.css">
+	<link rel="stylesheet" href="/owl.carousel/owl.theme.css">
+	<link rel="stylesheet" href="/css/magnific-popup.css">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/responsive.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@100&display=swap" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script> -->
+    
+    <title>Login to birDB!</title>
 </head>
-<body>
-    <form action="/login" method="POST">
-        <input type="text" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <button type="submit">Login</button>
+<body class="wide tall bg-green">
+	
+	<div class="row buffer"> </div>
 
     
-    </form>
+        <div class="row d-flex wide tall justify-content-center align-items-center">
+            <div class="col-4">
+				<div>
+					<h3 class="text-white font mb-10" >login:</h3>
+				<img src="/img/birDB-white-text-logo.png" alt="">
+
+                <form action="/login" method="POST" class="font text-white">
+					
+					<div class="input-group input-group-lg mt-3 mb-2">
+						<span class="input-group-text input-label-width" id="inputGroup">email:</span>
+						<input type="text" class="form-control" name="email" aria-label="Sizing example input" aria-describedby="inputGroup">
+					</div>
+					<div class="input-group input-group-lg mb-2">
+						<span class="input-group-text input-label-width" id="inputGroup">password:</span>
+						<input type="password" class="form-control" name="password" aria-label="Sizing example input" aria-describedby="inputGroup">
+					</div>
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-outline-light " >Submit</button>
+					</div>
+
+                </form>
+				<div class="font text-white"> Dont have an account? <a class="text-white font" href="/registration">Sign Up!</a></div>
+				</div>
+            </div>
+        </div>
+	
+
+
+
+
+
+
+
+    
+
+
+	<!-- main js -->
+
 </body>
 </html>
