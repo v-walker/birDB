@@ -13,10 +13,8 @@ router.get("/post/:postID", async (req, res) => {
 
     let post = await db.posts.findByPk(postID);
     let comments = await db.comments.findAll({where: {postID: postID}});
-    let data = [post, comments]
-    // data structure??? [{}, {}]
 
-    res.json(data);
+    res.json({post, comments});
 });
 
 router.put('/post/:postID', async (req, res) => {
