@@ -3,6 +3,7 @@ const router = express.Router()
 const gatekeeper = require('../auth');
 const formidable = require('formidable');
 const cloudinary = require("cloudinary");
+const db = require('../models');
 const path = require("path")
 const fs = require("fs")
 require('dotenv').config()
@@ -24,6 +25,8 @@ router.get("/create", gatekeeper, async(req, res) => {
 })
 
 router.post('/create', (req, res, next) => {
+    console.log(req.body.title)
+    // uploads image to cloudinary and deletes temp file with fs
     const form = new formidable.IncomingForm();
     let uploadFolder = path.join(__dirname, "../public", "files")
     form.uploadDir = uploadFolder
@@ -34,15 +37,11 @@ router.post('/create', (req, res, next) => {
         }
         cloudinary.uploader.upload(files.upload.filepath, result => {
             console.log("this is the result", result)
-            if (result.public_id) {
-                res.writeHead(200, { 'content-type': 'text/plain' });
-                res.write('received upload:\n\n');
-                res.end(JSON.stringify({ fields: fields, files: files }));
-            }
         })
         fs.unlinkSync(files.upload.filepath);
     });
-    
+    // end image upload functionality
+    res.redirect("/")
 });
 
 module.exports = router
