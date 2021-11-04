@@ -4,6 +4,6 @@ const gatekeeper =  require('../auth');
 
 router.get('/chat', (req,res) => {
 
-    res.render('/chat')
+    res.render('chat')
 })
 module.exports = router;
