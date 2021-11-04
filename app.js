@@ -11,7 +11,13 @@ require('./auth/passport-config')(passport);
 
 app.set('view engine','ejs');
 app.use(express.static('public'));
-app.use(helmet());
+
+app.use(
+    helmet({
+    contentSecurityPolicy: false,
+    })
+);
+
 app.use(cookieSession({
     name:'session',
     keys:['CaptainJacobKeyes'],

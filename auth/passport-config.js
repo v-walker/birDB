@@ -25,7 +25,9 @@ const init = (passport) => {
         done(null, user.id)
     })
     passport.deserializeUser(async(id,done) => {
+        
         let userInDatabase = await db.users.findByPk(id); 
+        
         if(userInDatabase){
             done(null, userInDatabase)
         }
