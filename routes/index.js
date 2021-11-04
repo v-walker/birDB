@@ -33,7 +33,7 @@ async function userArray(arr) {
     return usernameArr
 }
 
-router.get('/', async (req,res) => {
+router.get('/', gatekeeper, async (req,res) => {
     let recentPosts = await db.posts.findAll(); //need to put back date stuff
     let usernames = await userArray(recentPosts)
     console.log('username list stuff', usernames);
