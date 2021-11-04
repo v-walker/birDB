@@ -1,7 +1,8 @@
-let photoForm = document.querySelector("#photoForm")
+// let photoForm = document.getElementByID("photoForm")
 
-photoForm.addEventListener("submit", (e) => {
-    e.preventDefault()
-    console.log(e.target)
-
-})
+// photoForm.addEventListener("submit", (e) => {
+//     // e.preventDefault()
+//     let title = document.getElementByID("title")
+//     let upload = document.getElementByID("upload")
+//     // console.log(title, upload)
+// })

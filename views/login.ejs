@@ -27,25 +27,31 @@
         <div class="row d-flex wide tall justify-content-center align-items-center">
             <div class="col-4">
 				<div>
-					<h3 class="text-white font mb-10" >login:</h3>
+					<!-- <h3 class="text-white font mb-10" >login:</h3> -->
 				<img src="/img/birDB-white-text-logo.png" alt="">
+				<h5 class="text-white font text-end" >It's for the birds!</h5>
 
                 <form action="/login" method="POST" class="font text-white">
 					
 					<div class="input-group input-group-lg mt-3 mb-2">
 						<span class="input-group-text input-label-width" id="inputGroup">email:</span>
-						<input type="text" class="form-control" name="email" aria-label="Sizing example input" aria-describedby="inputGroup">
+						<input type="text" class="form-control" name="email" aria-label="Sizing example input" aria-describedby="inputGroup" required>*
 					</div>
 					<div class="input-group input-group-lg mb-2">
 						<span class="input-group-text input-label-width" id="inputGroup">password:</span>
-						<input type="password" class="form-control" name="password" aria-label="Sizing example input" aria-describedby="inputGroup">
+						<input type="password" class="form-control" name="password" aria-label="Sizing example input" aria-describedby="inputGroup" required>*
 					</div>
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="submit" class="btn btn-outline-light " >Submit</button>
+					<div class="row">
+					<div class="col-6" ><p class="font text-white">  <h5>Dont have an account? <a class="text-white font" href="/registration">Sign Up!</a></h5> *required</p></div>
+
+					<div class=" col-6 d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="submit" class="btn btn-outline-light button-height" >login</button>
 					</div>
+				</div>
 
                 </form>
-				<div class="font text-white"> Dont have an account? <a class="text-white font" href="/registration">Sign Up!</a></div>
+				
+				
 				</div>
             </div>
         </div>
@@ -61,6 +67,15 @@
 
 
 	<!-- main js -->
-
+	<div class="row buffer2"> </div>
+		<footer class="container-fluid footspace mb-3 pb-2 row mt-100 gx-0 d-flex align-items-bottom justify-content-center font">
+			<div class="row wide pb-2 pb-md-0 col-md-4 text-center">
+				<div class="col-12 text-white" >© birDB 2021</div>
+				<div class= "col-12 nav-item text-white" ><a href="https://github.com/v-walker/birDB/" class="text-white" target="_blank"> Github <i class="fab fa-github-square"></i></a></div>
+				
+			</div>
+	</footer>
+	<!-- main js -->
+	<script src="https://kit.fontawesome.com/b5578a43de.js" crossorigin="anonymous"></script>
 </body>
 </html>
