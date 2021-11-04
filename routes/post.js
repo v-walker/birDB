@@ -29,9 +29,7 @@ router.put('/post/:postID', async (req, res) => {
     let post = await db.posts.findByPk(postID);
     let comments = await db.comments.findAll({where: {postID: postID}});
 
-    let data = [post, comments]
-
-    res.json(data)
+    res.json({post, comments})
 });
 
 router.delete('/post/:postID', async (req, res) => {
@@ -42,42 +40,43 @@ router.delete('/post/:postID', async (req, res) => {
     res.redirect('/');
 });
 
-// router.post('/post/:postID', async (req, res) => {
-//     let postID = req.params.postID;
-//     let {username, contents} = req.body;
+router.post('/post/:postID', async (req, res) => {
+    let postID = req.params.postID;
+    let {username, contents} = req.body;
     
-//     // allow to post new comment to db (associated with a post)
-//     await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
+    // allow to post new comment to db (associated with a post)
+    await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
     
-//     let post = await db.posts.findByPk(postID);
-//     let comments = await db.comments.findAll({where: {postID: postID}});
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
 
-//     res.json(post, comments)
-// });
+    res.json({post, comments})
+});
 
-// // editing comment
-// router.put('/post/:commentID', async (req, res) => {
-//     let commentID = req.params.commentID;
-//     let {updatedContents, postID} = req.body;
+// editing comment
+router.put('/post/:postID/:commentID', async (req, res) => {
+    let postID = req.params.postID
+    let commentID = req.params.commentID;
+    let updatedContents = req.body.updatedContents;
 
-//     await db.comments.update({contents: updatedContents}, {where: {id: commentID}});
+    await db.comments.update({contents: updatedContents}, {where: {id: commentID}});
 
-//     let post = await db.posts.findByPk(postID);
-//     let comments = await db.comments.findAll({where: {postID: postID}});
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
 
-//     res.json(post, comments);
-// });
+    res.json({post, comments});
+});
 
-// router.delete('/post/:commentID', async (req, res) => {
-//     let commentID = req.params.commentID;
-//     let postID = req.body.postID
+router.delete('/post/:postID/:commentID', async (req, res) => {
+    let postID = req.params.postID;
+    let commentID = req.params.commentID;
 
-//     await db.comments.destroy({where: {id: commentID}});
+    await db.comments.destroy({where: {id: commentID}});
 
-//     let post = await db.posts.findByPk(postID);
-//     let comments = await db.comments.findAll({where: {postID: postID}});
+    let post = await db.posts.findByPk(postID);
+    let comments = await db.comments.findAll({where: {postID: postID}});
 
-//     res.json(post, comments);
-// });
+    res.json({post, comments});
+});
 
 module.exports = router;
