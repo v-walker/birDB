@@ -10,7 +10,7 @@ socket.on('updateMessage',(data) => {
     
     let newMessage =document.createElement('p');
     if (chatUserName.value === data.username){
-        newMessage.className = "bg-green chat-text text-white"
+        newMessage.className = "chat-text text-green text-right "
     } else{
         newMessage.className = "chat-text "
     }

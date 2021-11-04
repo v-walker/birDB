@@ -1,42 +1,4 @@
 <header>
-    <div class="header-top text-center clearfix">
-        <div class="col-sm-3 col-xs-6">
-            <div class="header-top-content socials ul-li border-right">
-                <ul>
-                    <li><a href="#"><i aria-hidden="true" class="social_facebook"></i></a></li>
-                    <li><a href="#"><i aria-hidden="true" class="social_googleplus"></i></a></li>
-                    <li><a href="#"><i aria-hidden="true" class="social_twitter"></i></a></li>
-                    <li><a href="https://github.com/v-walker/birDB/"><i aria-hidden="true" class="fab fa-github"></i></a></li>
-                </ul>
-            </div>
-        </div>
-        <!-- socials -->
-        <div class="col-sm-3 hidden-xs">
-            <div class="header-top-content mail border-right dark-gray-clr">
-                <span><i aria-hidden="true" class="icon_mail_alt green-clr mr10"></i> info@sitename.com</span>
-            </div>
-        </div>
-        <!-- mail -->
-        <div class="col-sm-3 hidden-xs">
-            <div class="header-top-content phone border-right dark-gray-clr">
-                <span><i aria-hidden="true" class="icon_phone green-clr mr10"></i> 1(800)DONT-CALL</span>
-            </div>
-        </div>
-        <!-- phone -->
-        <div class="col-sm-3 col-xs-6">
-            <div class="header-top-content user-login">
-                <div class="lumsum">
-                    <img src="/img/User-icon.png" alt="">
-                    <a class="dropdown-toggle dark-gray-clr" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> <%= username %>  <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#">Dropdown link</a></li>
-                        <li><a href="#">Dropdown link</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- user-login -->
-    </div>
 
     <div class="cdf-menu">
         <div class="container">
@@ -49,19 +11,19 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="responsive-icon">
                         <ul class="nav navbar-nav text-center">
-                            <li><a target="" href="/" class="info">Home</a></li>
-                            <li><a target="" href="/about">About</a></li>
-                            <li class="parent-item"><a  target="" href="case-details.html">service</a>
-                                <ul class="sub-menu">
-                                    <li><a href=".html">Action</a></li>
-                                    <li><a href=".html">Another action</a></li>
-                                    <li><a href=".html">Something else here</a></li>
-                                </ul>
-                            </li>
-                            <li><a target="" href="#">cases</a></li>
-                            <li><a target="" href="#">pages</a></li>
-                            <li><a target="" href="#">blog</a></li>
+                            <li><a target="" href="/" class="info">home</a></li>
+                            <li><a target="" href="/about">about</a></li>
                             <li><a target="" href="/chat">chat</a></li>
+                            <li class="parent-item"><a  target="" href="case-details.html"><%= username %></a>
+                                <ul class="sub-menu">
+                                    <li><a href="#">user dashboard</a></li>
+                                    <li><a href="/logout">logout</a></li>
+                                </ul>
+                            
+                                
+                                
+                            
+                            
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->

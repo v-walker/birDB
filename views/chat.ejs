@@ -7,7 +7,7 @@
 <%- include ('partials/header.ejs') %>
 
 <body>
-    <div class="breadcrumb-overlay">
+    <div class="breadcrumb-overlay bg-green">
         <div class="container">
             <div class="row">
                 <div class="cdf-breadcrumb ul-li text-center">
@@ -18,7 +18,7 @@
         </div>
     </div>
 </div>
-    
+
         <div class="container  font text-green">
             <div class="row ">
                 <div class="col-sm-12 ">
@@ -27,21 +27,22 @@
                             
                             <div class="h3 chat-title"></div><!-- chat-title -->
                         </header><!-- chat-header -->
-                        <div class="panel panel-default chat-box">
-                            <div class="panel-body chat-display">
-                            </div><!-- panel-body -->
-                        </div><!-- panel-default -->
+                        
                         <form name="chatForm" class="form-horizontal chat-form">
-                            <div class="form-group">
+                            <div class="form-group hidden">
                                 <label for="chat-username" class="col-sm-2 control-label">logged in as:</label>
                                 <div class="col-sm-3 mb-3" >
                                     <input  type="text" class="form-control" id="chat-username" value="<%= username %>" required disabled
                                         placeholder="Enter your name"> <a class="text-green text-end" href="/logout">logout and change user</a>
                                 </div><!-- col-sm-10 -->
                             </div><!-- form-group -->
+                            <div class="panel panel-default chat-box">
+                                <div class="panel-body chat-display ">
+                                </div><!-- panel-body -->
+                            </div><!-- panel-default -->
                             <div class="form-group">
-                                <label for="chat-message" class="col-sm-2 control-label">message</label>
-                                <div class="col-sm-10">
+                                
+                                <div class="col-sm-12">
                                     <div class="input-group">
                                         <input type="text" placeholder="Enter a message, then press enter"
                                             class="form-control" id="chat-message" rows="2" autocomplete="off" required>
