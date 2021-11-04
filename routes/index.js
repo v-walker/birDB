@@ -5,6 +5,8 @@ const db = require('../models');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
+// need to add following...
+
 function getUsername(post, id) {
     return new Promise(async (res, _rej) => {
         try{
@@ -22,23 +24,43 @@ function getUsername(post, id) {
     })
 };
 
-async function userArray(arr) {
-    usernameArr = [];
+function getDates() {
+    return new Promise(async (res, _rej) => {
+        try {
+            
+        } catch(err) {
+            console.log(err);
+        }
+    })
+}
+
+function getFollowers(id) {
+    return new Promise(async (res, _rej) => {
+        try {
+            
+        } catch(err) {
+            console.log(err);
+        }
+    })
+}
+
+async function arrayIterator(arr, action) {
+    manipulatedArray = [];
     for (let i = 0; i < arr.length; i++) {
         const post = arr[i];
         const id = post.id;
-        const result = await getUsername(post, id);
-        usernameArr.push(result);
+        const result = await action(post, id);
+        manipulatedArray.push(result);
     }
-    return usernameArr;
+    return manipulatedArray;
 };
 
 router.get('/', gatekeeper, async (req,res) => {
+    let record = await db.users.findByPk(req.user.id);
     let dates = [];
     let date = new Date();
     date.setDate(date.getDate() - 3);
-
-    let record = await db.users.findByPk(req.user.id);
+    
     let recentPosts = await db.posts.findAll({
         where: {
             createdAt: {
@@ -47,8 +69,8 @@ router.get('/', gatekeeper, async (req,res) => {
         }
     });
 
-    let usernames = await userArray(recentPosts)
-    console.log('username list stuff', usernames);
+    let usernames = await arrayIterator(recentPosts, getUsername)
+    // console.log('username list stuff', usernames);
 
     // clean this up later and use "userArray function"
     recentPosts.forEach(post => {

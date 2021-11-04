@@ -3,6 +3,7 @@ const router = express.Router()
 const gatekeeper =  require('../auth');
 const db = require('../models');
 
+// don't need this anymore? yes
 // router.get('/post', gatekeeper,(req, res) => {
 //     res.render("post");
 // });
