@@ -8,7 +8,7 @@ const db = require('../models');
 router.get('/registration', (req,res) => {
 
     res.render('registration')
-})
+});
 
 router.post('/registration', async (req,res) => {
     try{
@@ -28,6 +28,6 @@ router.post('/registration', async (req,res) => {
             error: "Error: Something went wrong"
         })
     }
-})
+});
 
 module.exports = router;
