@@ -6,7 +6,6 @@ const db = require('../models');
 router.get('/post', (req, res) => {
     res.render("post");
 });
-//not needed just use post/:id
 
 // GET /post/:postID
 router.get("/post/:postID", async (req, res) => {
@@ -14,16 +13,12 @@ router.get("/post/:postID", async (req, res) => {
         let postID = req.params.postID;
 
         let post = await db.posts.findByPk(postID);
-        // let comments = await db.comments.findAll({where: {postID: postID}});
+        let comments = await db.comments.findAll({where: {postID: postID}});
 
-        res.render("post", {
-            post: post.title,
-            
-        });
-        //change to render and send object
+        res.json({post, comments});
     } catch {
         console.log('Error getting post');
-        res.redirect('/404')
+        res.redirect('/')
     }
 });
 

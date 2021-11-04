@@ -10,14 +10,17 @@ router.get('/', async (req,res) => {
     date.setDate(date.getDate() - 3)
     console.log(date);
 
-    // let recentPosts = await db.posts.findAll({
-    //     where: {
-    //         createdAt: {
-    //             [Op.gte]: date
-    //         }
-    //     }
-    // });
-    res.render('index');
+    let recentPosts = await db.posts.findAll({
+        where: {
+            createdAt: {
+                [Op.gte]: date
+            }
+        }
+    });
+    
+    res.render('index', {
+        recentPosts: recentPosts
+    });
 });
 
 router.get('/blogs', async (req,res) => {
@@ -80,9 +83,9 @@ router.get('/blogs', async (req,res) => {
 //     res.json(posts)
 // })
 
-// router.get('/logout',(req,res) => {
-//     req.logout()
-//     res.redirect('/login')
-// });
+router.get('/logout',(req,res) => {
+    req.logout()
+    res.redirect('/login')
+});
 
 module.exports = router;

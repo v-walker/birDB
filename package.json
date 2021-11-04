@@ -2,8 +2,8 @@
   "dependencies": {
     "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
+    "bootstrap": "^5.1.3",
     "cookie-session": "^1.4.0",
-    "cookie-sessions": "^0.0.2",
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "helmet": "^4.6.0",
@@ -13,6 +13,7 @@
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.9.0",
     "socket.io": "^4.3.1"
+    
   },
   "name": "birdb",
   "description": "A birdwatching journal and social media.  - Learn about birds sighted in your region. - Add field notes and images to your personal birdwatching journal. - Share your sightings with others. - Chat with others who have similar interests!",
