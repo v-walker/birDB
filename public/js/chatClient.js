@@ -28,6 +28,7 @@ chatForm.addEventListener('submit',(e) => {
     //retrieve message from chat input field
     //chat.value
     //take socket object and emit message to node server socket.emit()
+    
     console.log(chatUserName.value, chatMessage.value);
     socket.emit('postMessage',{
         username: chatUserName.value,

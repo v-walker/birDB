@@ -73,6 +73,11 @@ Table Of Index
 .wide{
 width:100%;
 }
+.chat-box{
+height: 30vh;
+border: #027373; 
+border-color: #027373;
+}
 .button-height{
 	height: 40px;
 }
