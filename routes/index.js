@@ -5,9 +5,41 @@ const db = require('../models');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
+
+function getUsername(post, id) {
+    return new Promise(async (res, _rej) => {
+        try{
+            let result = await db.posts.findByPk(id, {
+                include: [{
+                    model: db.users,
+                    required: true
+                }]})
+                // console.log('in promise', result);
+            res(result.dataValues.user.dataValues.username)
+        }
+        catch(err){
+            console.log(err);
+        }
+    })
+};
+
+async function userArray(arr) {
+    usernameArr = [];
+    // dates = [];
+    for (let i = 0; i < arr.length; i++) {
+        const post = arr[i];
+        const id = post.id;
+        const result = await getUsername(post, id);
+        usernameArr.push(result);
+    }
+    return usernameArr;
+};
+
 router.get('/', gatekeeper, async (req,res) => {
-    let date = new Date()
-    date.setDate(date.getDate() - 3)
+    let dates = [];
+    let date = new Date();
+    date.setDate(date.getDate() - 3);
+
     console.log(date);
     let record = await db.users.findByPk(req.user.id)
     let recentPosts = await db.posts.findAll({
@@ -17,8 +49,13 @@ router.get('/', gatekeeper, async (req,res) => {
             }
         }
     });
+
+    let usernames = await userArray(recentPosts)
+    console.log('username list stuff', usernames);
+
     
     res.render('index', {
+        usernames:usernames,
         username: record.username,
         recentPosts: recentPosts
     });
@@ -45,44 +82,30 @@ router.get('/blogs', gatekeeper, async (req,res) => {
         required: true
     }]})
 
-    let userRecord = await db.users.findByPk(1) //req.user.id 
-    console.log(userRecord);
-    // let followingUsers = userRecord.following
-    res.json(posts)
-})
 
-//need to figure out if multi posts from one user can go on index or not. might need sep route then render in the /blogs/:id and use ejs for each to build instead, can use blogSkeleton
-// router.get('/blogs/:id', async (req,res) => {
-//     //put gatekeeper to get user id
-//     let id = req.params.id
-//     let date = new Date()
-//     date.setDate(date.getDate() - 3)
-//     console.log(date);
+    recentPosts.forEach(post => {
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": rawDate.getMonth(), 
+            "day": rawDate.getDate()
+        }
+        dates.push(formattedDate);
+        
+    });
 
-//     // let recentPosts = await db.posts.findAll(
-//     //     {
-//     //     where: {
-//     //         createdAt: {
-//     //             [Op.gte]: date
-//     //         }
-//     //     },
-//     //      include: {}
-//     // }
-//     // );
-//     let posts = await db.posts.findAll({
-//         where: {
-//             userID: id
-//         },
-//         include: [{
-//             model: db.users,
-//             required: true
-//     }]})
+    console.log(recentPosts);
+    console.log("---------");
+    console.log(usernames);
+    console.log("-------");
+    console.log(dates);
 
-//     // let userRecord = await db.users.findByPk(1) //req.user.id 
-//     // console.log(userRecord);
-//     // let followingUsers = userRecord.following
-//     res.json(posts)
-// })
+    res.render('index', {
+        username: MediaRecorder.username,
+        recentPosts: recentPosts,
+        dates: dates,
+        users: usernames
+    });
+});
 
 router.get('/logout',(req,res) => {
     req.logout()
