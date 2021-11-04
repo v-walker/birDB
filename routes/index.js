@@ -20,26 +20,47 @@ function getUsername(post, id) {
             console.log(err);
         }
     })
-}
+};
 
 async function userArray(arr) {
-    usernameArr = []
+    usernameArr = [];
+    // dates = [];
     for (let i = 0; i < arr.length; i++) {
         const post = arr[i];
-        const id = post.id
-        const result = await getUsername(post, id)
-        usernameArr.push(result)
+        const id = post.id;
+        const result = await getUsername(post, id);
+        usernameArr.push(result);
     }
-    return usernameArr
-}
+    return usernameArr;
+};
+
+router.get('/', gatekeeper, async (req,res) => {
+    let dates = [];
+    let date = new Date();
+    date.setDate(date.getDate() - 3);
+
+    console.log(date);
+    users = []
+    let recentPosts = await db.posts.findAll({
+        where: {
+            createdAt: {
+                [Op.gte]: date
+            }
+        }
+    });
+
+    let usernames = await userArray(recentPosts)
+    console.log('username list stuff', usernames);
+})
 
 router.get('/', gatekeeper, async (req,res) => {
     let recentPosts = await db.posts.findAll(); //need to put back date stuff
     let usernames = await userArray(recentPosts)
     console.log('username list stuff', usernames);
     res.render('index', {
-        recentPosts: recentPosts,
-        usernames: usernames
+        usernames: usernames,
+        username: record.username,
+        recentPosts: recentPosts
     });
 });
 
@@ -59,51 +80,35 @@ router.get('/blogs', async (req,res) => {
     //      include: {}
     // }
     // );
-    let posts = await db.posts.findAll({
-        include: [{
-            model: db.users,
-            required: true
-        }],
-})
-    // console.log(posts[0].user.dataValues.username);
-    // let userRecord = await db.users.findByPk(1) //req.user.id 
-    // console.log(userRecord);
-    // let followingUsers = userRecord.following
-    res.json(posts[0].user)
-})
+    let posts = await db.posts.findAll({include: [{
+        model: db.users,
+        required: true
+    }]})
 
-//need to figure out if multi posts from one user can go on index or not. might need sep route then render in the /blogs/:id and use ejs for each to build instead, can use blogSkeleton
-// router.get('/blogs/:id', async (req,res) => {
-//     //put gatekeeper to get user id
-//     let id = req.params.id
-//     let date = new Date()
-//     date.setDate(date.getDate() - 3)
-//     console.log(date);
 
-//     // let recentPosts = await db.posts.findAll(
-//     //     {
-//     //     where: {
-//     //         createdAt: {
-//     //             [Op.gte]: date
-//     //         }
-//     //     },
-//     //      include: {}
-//     // }
-//     // );
-//     let posts = await db.posts.findAll({
-//         where: {
-//             userID: id
-//         },
-//         include: [{
-//             model: db.users,
-//             required: true
-//     }]})
+    recentPosts.forEach(post => {
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": rawDate.getMonth(), 
+            "day": rawDate.getDate()
+        }
+        dates.push(formattedDate);
+        
+    });
 
-//     // let userRecord = await db.users.findByPk(1) //req.user.id 
-//     // console.log(userRecord);
-//     // let followingUsers = userRecord.following
-//     res.json(posts)
-// })
+    console.log(recentPosts);
+    console.log("---------");
+    console.log(usernames);
+    console.log("-------");
+    console.log(dates);
+
+    res.render('index', {
+        username: MediaRecorder.username,
+        recentPosts: recentPosts,
+        dates: dates,
+        users: usernames
+    });
+});
 
 router.get('/logout',(req,res) => {
     req.logout()
