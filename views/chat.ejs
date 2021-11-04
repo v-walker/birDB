@@ -13,11 +13,11 @@
     <title>birDB | Tweetr</title>
 </head>
 <body>
-
-        <div class="container ">
+    <%- include ('partials/header.ejs') %>
+        <div class="container  ">
             <div class="row ">
                 <div class="col-sm-12 ">
-                    <article class="chat justify-content-center">
+                    <article class="chat justify-content-center ">
                         <header class="chat-header">
                             <div class="h3 chat-title">Tweetr</div><!-- chat-title -->
                         </header><!-- chat-header -->
@@ -27,14 +27,14 @@
                         </div><!-- panel-default -->
                         <form name="chatForm" class="form-horizontal chat-form">
                             <div class="form-group">
-                                <label for="chat-username" class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-4" >
+                                <label for="chat-username" class="col-sm-2 control-label">username</label>
+                                <div class="col-sm-3" >
                                     <input  type="text" class="form-control" id="chat-username" value="<%= username %>" required disabled
                                         placeholder="Enter your name">
                                 </div><!-- col-sm-10 -->
                             </div><!-- form-group -->
                             <div class="form-group">
-                                <label for="chat-message" class="col-sm-2 control-label">Message</label>
+                                <label for="chat-message" class="col-sm-2 control-label">message</label>
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <input type="text" placeholder="Enter a message, then press enter"
