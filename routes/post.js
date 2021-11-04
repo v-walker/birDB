@@ -22,6 +22,7 @@ router.get("/post/:postID", async (req, res) => {
     }
 });
 
+// edit selected post
 router.put('/post/:postID', async (req, res) => {
     try {
         let postID = req.params.postID;
@@ -42,6 +43,7 @@ router.put('/post/:postID', async (req, res) => {
     }
 });
 
+// delete selected post
 router.delete('/post/:postID', async (req, res) => {
     try {
         let postID = req.params.postID;
@@ -57,6 +59,7 @@ router.delete('/post/:postID', async (req, res) => {
     }
 });
 
+// add a comment to selected post
 router.post('/post/:postID', async (req, res) => {
     try {
         let postID = req.params.postID;
@@ -98,6 +101,7 @@ router.put('/post/:postID/:commentID', async (req, res) => {
     }
 });
 
+// deleting a comment
 router.delete('/post/:postID/:commentID', async (req, res) => {
     try {
         let postID = req.params.postID;
