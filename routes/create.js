@@ -13,8 +13,14 @@ cloudinary.config({
     api_secret: process.env.API_SECRET
 });
 
-router.get("/create", (req, res) => {
-    res.render("create")
+router.get("/create", gatekeeper, async(req, res) => {
+    
+    let record = await db.users.findByPk(req.user.id)
+    res.render("create",
+    {
+        username: record.username
+    }
+    )
 })
 
 router.post('/create', (req, res, next) => {

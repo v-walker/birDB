@@ -6,7 +6,7 @@ const db = require('../models');
 router.get('/chat', gatekeeper, async (req,res) => {
 
 let record = await db.users.findByPk(req.user.id)
-console.log(req.user);
+
     res.render('chat',
     {
         username: record.username
