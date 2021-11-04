@@ -38,7 +38,7 @@ router.get('/', gatekeeper, async (req,res) => {
     let date = new Date();
     date.setDate(date.getDate() - 3);
 
-    let record = await db.users.findByPk(req.user.id)
+    let record = await db.users.findByPk(req.user.id);
     let recentPosts = await db.posts.findAll({
         where: {
             createdAt: {
@@ -50,6 +50,7 @@ router.get('/', gatekeeper, async (req,res) => {
     let usernames = await userArray(recentPosts)
     console.log('username list stuff', usernames);
 
+    // clean this up later and use "userArray function"
     recentPosts.forEach(post => {
         let rawDate = post.dataValues.createdAt
         let formattedDate = {
@@ -57,7 +58,6 @@ router.get('/', gatekeeper, async (req,res) => {
             "day": rawDate.getDate()
         }
         dates.push(formattedDate);
-        
     });
 
     console.log(recentPosts);
