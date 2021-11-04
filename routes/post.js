@@ -27,7 +27,7 @@ router.put('/post/:postID', async (req, res) => {
     let post = await db.posts.findByPk(postID);
     let comments = await db.comments.findAll({where: {postID: postID}});
 
-    res.json({post, comments})
+    res.json({post, comments});
 });
 
 router.delete('/post/:postID', async (req, res) => {
