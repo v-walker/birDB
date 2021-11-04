@@ -29,7 +29,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(require('./routes/index'));
-app.use(require('./routes/post'));
 app.use(require('./routes/about'));
 app.use(require('./routes/create'));
 app.use(require('./routes/chat'));

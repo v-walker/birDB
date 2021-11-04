@@ -10,6 +10,28 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-8" id="append-posts">
+					 <% for( let i = 0; i < recentPosts.length; i++ ) { %>
+						<article class="mb80">
+							<div class="cdf-post relative pl70">
+								<div class="cdf-image"><img src="/img/blog/blog-image-5.jpg" alt="">
+									<div class="cdf-meta">
+										<ul class="post-meta" style="color: black">
+											<li><a href="#">day <%= recentPosts[0].createdAt %></a><span>month <%= recentPosts[0].createdAt %></span></li>
+											<li><a href="#"><img src="/img/icons/Comments.png" alt=""> </a><span>09</span></li>
+											<li><a href="#"><img src="/img/icons/like.png" alt=""> </a><span><%= recentPosts[0].likes %></span></li>
+										</ul>
+									</div>
+								</div>
+								<div class="cdf-content pt20 pl50">
+									<div class="cdf-title mb15"><h2><a href="/post/<%= recentPosts[0].id %>"><%= recentPosts[0].title %></a></h2></div>
+									<div class="cdf-text"><p><%= usernames[0] %></p></div>
+				
+									<div class="cdf-btn cdf-btn-one mt20"><a href="/post/<%= recentPosts[0].id %>">read more</a></div>
+								</div>
+							</div>
+						</article>
+					 <% } %>
+
 				</div>
 				<div class="col-sm-4">
 					<div class="side-bar">
@@ -33,7 +55,7 @@
 
 	<%- include ('partials/scripts.ejs') %>
 
-	<script src="/clientjs/clientIndex.js"></script>
+	<!-- <script src="/clientjs/clientIndex.js"></script> -->
 
 </body>	
 </html>
