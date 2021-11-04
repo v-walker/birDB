@@ -5,11 +5,11 @@ const db = require('../models');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
-router.get('/', async (req,res) => {
+router.get('/', gatekeeper, async (req,res) => {
     let date = new Date()
     date.setDate(date.getDate() - 3)
     console.log(date);
-
+    let record = await db.users.findByPk(req.user.id)
     let recentPosts = await db.posts.findAll({
         where: {
             createdAt: {
@@ -19,11 +19,12 @@ router.get('/', async (req,res) => {
     });
     
     res.render('index', {
+        username: record.username,
         recentPosts: recentPosts
     });
 });
 
-router.get('/blogs', async (req,res) => {
+router.get('/blogs', gatekeeper, async (req,res) => {
     //put gatekeeper to get user id
     let date = new Date()
     date.setDate(date.getDate() - 3)
