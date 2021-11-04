@@ -1,46 +1,52 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/css/style.css">
+    <%- include ('partials/meta.ejs') %>
     <title>birDB | Tweetr</title>
 </head>
-<body>
+<%- include ('partials/header.ejs') %>
 
-        <div class="container ">
+<body>
+    <div class="breadcrumb-overlay">
+        <div class="container">
+            <div class="row">
+                <div class="cdf-breadcrumb ul-li text-center">
+                    
+                    <div class="font" style="color: white; font-size: 65px;" >Tweetr</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+        <div class="container  font text-green">
             <div class="row ">
                 <div class="col-sm-12 ">
-                    <article class="chat justify-content-center">
+                    <article class="chat justify-content-center ">
                         <header class="chat-header">
-                            <div class="h3 chat-title">Tweetr</div><!-- chat-title -->
+                            
+                            <div class="h3 chat-title"></div><!-- chat-title -->
                         </header><!-- chat-header -->
-                        <div class="panel panel-default">
+                        <div class="panel panel-default chat-box">
                             <div class="panel-body chat-display">
                             </div><!-- panel-body -->
                         </div><!-- panel-default -->
                         <form name="chatForm" class="form-horizontal chat-form">
                             <div class="form-group">
-                                <label for="chat-username" class="col-sm-2 control-label">Name</label>
-                                <div class="col-sm-10" >
+                                <label for="chat-username" class="col-sm-2 control-label">logged in as:</label>
+                                <div class="col-sm-3 mb-3" >
                                     <input  type="text" class="form-control" id="chat-username" value="<%= username %>" required disabled
-                                        placeholder="Enter your name">
+                                        placeholder="Enter your name"> <a class="text-green text-end" href="/logout">logout and change user</a>
                                 </div><!-- col-sm-10 -->
                             </div><!-- form-group -->
                             <div class="form-group">
-                                <label for="chat-message" class="col-sm-2 control-label">Message</label>
+                                <label for="chat-message" class="col-sm-2 control-label">message</label>
                                 <div class="col-sm-10">
                                     <div class="input-group">
                                         <input type="text" placeholder="Enter a message, then press enter"
                                             class="form-control" id="chat-message" rows="2" autocomplete="off" required>
                                         <span class="input-group-btn">
-                                            <button id="chat-submit" class="btn bg-green text-white button" type="submit">Chat</button>
+                                            <button id="chat-submit" class="btn bg-green button" style="color: white;" type="submit">send</button>
                                         </span>
                                     </div><!-- input-group -->
                                 </div><!-- col-sm-10 -->
@@ -51,23 +57,19 @@
             </div><!-- row -->
         </div><!-- container -->
         
+    
+
+    
+    
+        <div class="row buffer2"> </div>
+	
+	<!-- main js -->
+	
     <%- include ('partials/footer.ejs') %>
-
     <%- include ('partials/scripts.ejs') %>
+    <script src="/js/chatClient.js"></script>  
 
-    
-    
 
-    <footer class="container-fluid footspace mb-3 pb-2 row m-0 gx-0 d-flex align-items-bottom justify-content-center">
-        <div class="row wide pb-2 pb-md-0 col-md-4 text-center">
-            <div class="col-12">© birDB 2021</div>
-            <div class="col-12 nav-item"><a href="https://github.com/v-walker/birDB/" class="text-green" target="_blank"> Github <i class="fab fa-github-square"></i></a></div>
-            
-        </div>
-</footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.5/socket.io.js"></script>
-<script src="/js/chatClient.js"></script>  
-<script src="https://kit.fontawesome.com/b5578a43de.js" crossorigin="anonymous"></script>
 </body>
 </html>
