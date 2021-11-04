@@ -473,7 +473,7 @@ margin-left: 5px;
 /*-----header-top-------*/
 
 .cdf-menu .logo {
-width: 200px;
+width: auto;
 padding-top: 30px;
 	transition: 200ms linear;
 }
@@ -483,7 +483,7 @@ transition: 200ms linear;
 box-shadow: 0 1px 3px #ccc;
 }
 .cdf-menu.fix-menu .logo {
-width: 200px;
+width: auto;
 padding-top: 15px;
 }
 .main-menu ul li a {
