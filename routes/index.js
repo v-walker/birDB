@@ -5,52 +5,44 @@ const db = require('../models');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
-router.get('/', async (req,res) => {
-    let date = new Date()
-    date.setDate(date.getDate() - 3)
-    console.log(date);
-    users = []
-    let recentPosts = await db.posts.findAll({
-        where: {
-            createdAt: {
-                [Op.gte]: date
-            }
+function getUsername(post, id) {
+    return new Promise(async (res, _rej) => {
+        try{
+            let result = await db.posts.findByPk(id, {
+                include: [{
+                    model: db.users,
+                    required: true
+                }]})
+                // console.log('in promise', result);
+            res(result.dataValues.user.dataValues.username)
         }
-    });
-    recentPosts.forEach( async (post) => {
-        let id = post.id
-        let userObj = await db.posts.findByPk(id, {
-            include: [{
-                model: db.users,
-                required: true
-            }]})
-        console.log(userObj.dataValues.user.dataValues.username);
+        catch(err){
+            console.log(err);
+        }
     })
-    
-    // console.log(recentPosts);
-    // data structure: [posts {dataValues: {id: num, title: 'string', ... user: []}, _previousDataValues: {}, ...}]
-    // console.log(recentPostswithUsers[0].dataValues.user);
-    // let recentPosts = recentPostswithUsers[0].dataValues
-    // let users = recentPostswithUsers[0].dataValues.user.dataValues
-    // console.log(recentPosts);
-    // console.log("---------");
-    // console.log(users);
+}
 
-    // let dates = []
+async function userArray(arr) {
+    usernameArr = []
+    for (let i = 0; i < arr.length; i++) {
+        const post = arr[i];
+        const id = post.id
+        const result = await getUsername(post, id)
+        usernameArr.push(result)
+    }
+    return usernameArr
+}
 
-    // recentPosts.forEach(post => {
-    //     dates.push(post.createdAt)
-        
-    // });
-    // console.log("-------");
-    // console.log(dates);
-
-
+router.get('/', async (req,res) => {
+    let recentPosts = await db.posts.findAll(); //need to put back date stuff
+    let usernames = await userArray(recentPosts)
+    console.log('username list stuff', usernames);
     res.render('index', {
         recentPosts: recentPosts,
-        users: users
+        usernames: usernames
     });
 });
+
 router.get('/blogs', async (req,res) => {
     //put gatekeeper to get user id
     let date = new Date()
