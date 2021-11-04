@@ -24,7 +24,6 @@ function getUsername(post, id) {
 
 async function userArray(arr) {
     usernameArr = [];
-    // dates = [];
     for (let i = 0; i < arr.length; i++) {
         const post = arr[i];
         const id = post.id;
@@ -39,8 +38,7 @@ router.get('/', gatekeeper, async (req,res) => {
     let date = new Date();
     date.setDate(date.getDate() - 3);
 
-    console.log(date);
-    users = []
+    let record = await db.users.findByPk(req.user.id)
     let recentPosts = await db.posts.findAll({
         where: {
             createdAt: {
@@ -51,40 +49,6 @@ router.get('/', gatekeeper, async (req,res) => {
 
     let usernames = await userArray(recentPosts)
     console.log('username list stuff', usernames);
-})
-
-router.get('/', gatekeeper, async (req,res) => {
-    let recentPosts = await db.posts.findAll(); //need to put back date stuff
-    let usernames = await userArray(recentPosts)
-    console.log('username list stuff', usernames);
-    res.render('index', {
-        usernames: usernames,
-        username: record.username,
-        recentPosts: recentPosts
-    });
-});
-
-router.get('/blogs', async (req,res) => {
-    //put gatekeeper to get user id
-    let date = new Date()
-    date.setDate(date.getDate() - 3)
-    console.log(date);
-
-    // let recentPosts = await db.posts.findAll(
-    //     {
-    //     where: {
-    //         createdAt: {
-    //             [Op.gte]: date
-    //         }
-    //     },
-    //      include: {}
-    // }
-    // );
-    let posts = await db.posts.findAll({include: [{
-        model: db.users,
-        required: true
-    }]})
-
 
     recentPosts.forEach(post => {
         let rawDate = post.dataValues.createdAt
@@ -101,12 +65,12 @@ router.get('/blogs', async (req,res) => {
     console.log(usernames);
     console.log("-------");
     console.log(dates);
-
+    
     res.render('index', {
-        username: MediaRecorder.username,
+        username: record.username,
         recentPosts: recentPosts,
         dates: dates,
-        users: usernames
+        usernames: usernames,
     });
 });
 
