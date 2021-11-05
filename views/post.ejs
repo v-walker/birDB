@@ -64,14 +64,7 @@
 								<form action="php/contact-form.php" method="post" id="contact-form" name="contact-form">
 									<div class="contact-form-inner mb80">
 										<div class="row">
-											<div class="contact-form-field col-md-6">
-												<input type="text" name="name" id="contact-form-name" placeholder="Name*">
-												<input type="text" name="email" id="contact-form-email" placeholder="Mail*">
-												<input type="text" name="web" id="contact-form-phone" placeholder="Website">
-											</div>
-											<div class="contact-form-field col-md-6">
-											
-										
+											<div class="contact-form-field col-md-12">
 											<textarea id="contact-form-message" rows="5" placeholder="Type your message...."></textarea>
 											<div class="cdf-btn cdf-btn-one submit">
 												<button type="submit">SEND MESSAGE</button>
@@ -90,9 +83,8 @@
 									<button type="submit"><i class="icon_search"></i></button>
 								</form>
 							</div>
-							<!-- search 
-
-							<%- include ('partials/recentSkeleton.ejs') %>  -->
+							<%- include ('partials/followingSkeleton.ejs') %>
+							<%- include ('partials/recentSkeleton.ejs') %>
 						</div>
 					</div>
 				</div>

@@ -17,11 +17,30 @@ function getFollowingUsers(id) {
     })
 };
 
-async function arrayIterator(arr, action) {
+function userOrFollow(post, option){
+    return new Promise(async (res, _rej) => {
+        try {
+            if(option == "username"){
+                console.log('if');
+                const id = post.userID
+                res(id)
+            } 
+            else{
+                console.log('else');
+                const id = post.id
+                res(id)
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    })
+}
+
+async function arrayIterator(arr, action, option) {
     manipulatedArray = [];
     for (let i = 0; i < arr.length; i++) {
         const post = arr[i];
-        const id = post.id;
+        const id = await userOrFollow(post, option)
         const result = await action(post, id);
         manipulatedArray.push(result);
     }
@@ -42,7 +61,7 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
-        let following = await arrayIterator(followingIDList, getFollowingUsers);
+        let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
         console.log(comments);
         
 
@@ -70,7 +89,7 @@ router.put('/post/:postID', async (req, res) => {
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
-        let following = await arrayIterator(followingIDList, getFollowingUsers);
+        let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
 
         res.render("post", {
             username: record.username,
@@ -116,7 +135,7 @@ router.post('/post/:postID', async (req, res) => {
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
-        let following = await arrayIterator(followingIDList, getFollowingUsers);
+        let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
 
         res.render("post", {
             username: record.username,
@@ -145,7 +164,7 @@ router.put('/post/:postID/:commentID', async (req, res) => {
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
-        let following = await arrayIterator(followingIDList, getFollowingUsers);
+        let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
 
         res.render("post", {
             username: record.username,
@@ -173,7 +192,7 @@ router.delete('/post/:postID/:commentID', async (req, res) => {
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
-        let following = await arrayIterator(followingIDList, getFollowingUsers);
+        let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
 
         res.render("post", {
             username: record.username,
