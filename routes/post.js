@@ -2,8 +2,30 @@ const express = require('express');
 const router = express.Router();
 const gatekeeper =  require('../auth');
 const db = require('../models');
+const Sequelize = require('sequelize')
+const Op = Sequelize.Op;
 
-// will refactor redundancies in http request methods later, but all information is currently being passed properly
+// will refactor redundancies in http requests later, but all information is currently being passed properly
+
+let date = new Date();
+date.setDate(date.getDate() - 3);
+const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+
+function getUsername(post, id) {
+    return new Promise(async (res, _rej) => {
+        try{
+            let result = await db.posts.findByPk(id, {
+                include: [{
+                    model: db.users,
+                    required: true
+                }]})
+            res(result.dataValues.user.dataValues.username)
+        }
+        catch(err){
+            console.log(err);
+        }
+    })
+};
 
 function getFollowingUsers(id) {
     return new Promise(async (res, _rej) => {
@@ -28,29 +50,73 @@ async function arrayIterator(arr, action) {
     return manipulatedArray;
 };
 
+function getDates(arr) {
+    let dates = [];
+    arr.forEach(post => {
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": monthNames[rawDate.getMonth()], 
+            "day": rawDate.getDate()
+        }
+        dates.push(formattedDate);
+    });
+    return dates;
+};
+
+async function getRecentPosts(date) {
+    let recentPosts = await db.posts.findAll({
+        where: {
+            createdAt: {
+                [Op.gte]: date
+            }
+        },
+        limit: 2
+    });
+    return recentPosts
+}
+
 // don't need this anymore? yes
 // router.get('/post', gatekeeper,(req, res) => {
 //     res.render("post");
 // });
 
 // GET /post/:postID
-router.get("/post/:postID", gatekeeper,async (req, res) => {
+router.get("/post/:postID", gatekeeper, async (req, res) => {
     try {
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
 
+        // for individual post
         let post = await db.posts.findByPk(postID);
+        let postUserID = post.dataValues.userID;
+        let postUsername = await getUsername(postID, postUserID);
+        console.log(postUsername);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
-        console.log(comments);
-        
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": monthNames[rawDate.getMonth()], 
+            "day": rawDate.getDate()
+        }
 
+        // recent posts
+        let recentPosts = await getRecentPosts(date);
+        console.log(recentPosts);
+        let dates = getDates(recentPosts);
+        let usernames = await arrayIterator(recentPosts, getUsername);
+        
         res.render("post", {
             username: record.username,
+            userID: record.id,
             following: following,
             post: post,
-            comments: comments
+            postUsername: postUsername,
+            comments: comments,
+            date: formattedDate,
+            recentPosts: recentPosts,
+            dates: dates,
+            usernames: usernames
         });
     } catch {
         console.log('Error getting post');
@@ -61,7 +127,7 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
 // edit selected post
 router.put('/post/:postID', async (req, res) => {
     try {
-        // let record = await db.users.findByPk(req.user.id);
+        let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
         // pulling updated information from edit
         let {title, observation, imgURL} = req.body;

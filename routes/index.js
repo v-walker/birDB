@@ -73,18 +73,16 @@ router.get('/', gatekeeper, async (req,res) => {
         dates.push(formattedDate);
     });
 
-    let followingIDList = (record.following !== null)? record.following.split(','): [];
-    let following = await arrayIterator(followingIDList, getFollowingUsers);
-
-    console.log(record);
-    console.log("---------");
-    console.log(following);
-    console.log("---------");
-    console.log(recentPosts);
-    console.log("---------");
-    console.log(usernames);
-    console.log("-------");
-    console.log(dates);
+    // take out for production
+    // console.log(record);
+    // console.log("---------");
+    // console.log(following);
+    // console.log("---------");
+    // console.log(recentPosts);
+    // console.log("---------");
+    // console.log(usernames);
+    // console.log("-------");
+    // console.log(dates);
     
     res.render('index', {
         username: record.username,
