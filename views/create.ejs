@@ -2,33 +2,47 @@
 <html lang="en">
 <head>
 	<%- include ('partials/meta.ejs') %> 
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous"> -->
+	<link rel="stylesheet" href="/css/create.css">
 </head>
 <body>
 	<%- include ('partials/header.ejs') %>
-	<div class="container">
-		<div class="row d-flex justify-content-center">
-			<div class="col-4">
-			<form action="/create" enctype="multipart/form-data" method="POST">
-				<input type="text" name="title" placeholder="Post Title"><br>
-				<input type="text" name="common" placeholder="Common Name"><br>
-				<input type="text" name="scientific" placeholder="Scientific Name"><br>
-				<input type="text" name="location" placeholder="Location"><br>
-				<input type="text" name="precip" placeholder="Precipitation"><br>
-				<input type="text" name="temp" placeholder="Temperature"><br>
-				<input type="text" name="cloud" placeholder="Cloud Cover"><br>
-				<input type="text" name="observation" placeholder="Notes"><br>
-				<input type="file" name="upload" multiple="multiple"><br/>
-				<input type="submit" value="Upload">
-			</form>
+	<div class="breadcrumb-overlay bg-green">
+        <div class="container">
+            <div class="row">
+                <div class="cdf-breadcrumb ul-li text-center">
+                    <div class="font" style="color: white; font-size: 65px;" >Log A Bird</div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<div class="container-fluid">
+		<div class="row text-center">
+			<div class="col-12">
+				<form action="/create" enctype="multipart/form-data" method="POST">
+					<br>
+					<br>
+					<input type="text" name="title" placeholder="Post Title"><br>
+					<input type="text" name="common" placeholder="Common Name"><br>
+					<input type="text" name="scientific" placeholder="Scientific Name"><br>
+					<input type="text" name="location" placeholder="Location"><br>
+					<input type="text" name="precip" placeholder="Precipitation"><br>
+					<input type="text" name="temp" placeholder="Temperature"><br>
+					<input type="text" name="cloud" placeholder="Cloud Cover"><br>
+					<input type="text" name="observation" placeholder="Notes"><br>
+					<br>
+					<input class="chooseBtn" style="text-align-last: center; margin: auto" type="file" name="upload" multiple="multiple">
+					<br>
+					<input class="submitBtn" type="submit" value="Log That Bird!">
+					<br>
+					<br>
+					<br>
+				</form>
 			</div>
 		</div>
 	</div>
 <%- include ('partials/footer.ejs') %>
-
 <%- include ('partials/scripts.ejs') %>
-<scripts src="/js/birDB/createClient.js"></scripts>
-
-
+<!-- <scripts src="/js/birDB/createClient.js"></scripts> -->
 </body>
-
 </html>
