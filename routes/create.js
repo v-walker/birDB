@@ -24,7 +24,7 @@ router.get("/create", gatekeeper, async(req, res) => {
     )
 })
 
-router.post('/create', async (req, res, next) => {
+router.post('/create', (req, res, next) => {
     // pulls encrypted form from header and parses out with formidable
     const form = new formidable.IncomingForm();
     let uploadFolder = path.join(__dirname, "../public", "files")
