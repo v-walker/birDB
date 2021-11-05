@@ -31,7 +31,7 @@ function getFollowingUsers(id) {
             console.log(err);
         }
     })
-}
+};
 
 async function arrayIterator(arr, action) {
     manipulatedArray = [];
@@ -48,6 +48,7 @@ router.get('/', gatekeeper, async (req,res) => {
     let record = await db.users.findByPk(req.user.id);
     let dates = [];
     let date = new Date();
+    
     date.setDate(date.getDate() - 3);
     
     let recentPosts = await db.posts.findAll({
@@ -58,8 +59,9 @@ router.get('/', gatekeeper, async (req,res) => {
         }
     });
 
-    let usernames = await arrayIterator(recentPosts, getUsername)
-    // console.log('username list stuff', usernames);
+    let usernames = await arrayIterator(recentPosts, getUsername);
+    let followingIDList = (record.following !== null)? record.following.split(','): [];
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
 
     recentPosts.forEach(post => {
         let rawDate = post.dataValues.createdAt
@@ -70,11 +72,7 @@ router.get('/', gatekeeper, async (req,res) => {
         dates.push(formattedDate);
     });
 
-    let followingIDList = (record.following !== null)? record.following.split(','): [];
-    let following = await arrayIterator(followingIDList, getFollowingUsers);
-
-    console.log(record);
-    console.log("---------");
+    // take these out before production
     console.log(following);
     console.log("---------");
     console.log(recentPosts);
@@ -88,7 +86,7 @@ router.get('/', gatekeeper, async (req,res) => {
         following: following,
         recentPosts: recentPosts,
         dates: dates,
-        usernames: usernames,
+        usernames: usernames
     });
 });
 
