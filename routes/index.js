@@ -62,11 +62,13 @@ router.get('/', gatekeeper, async (req,res) => {
     let usernames = await arrayIterator(recentPosts, getUsername);
     let followingIDList = (record.following !== null)? record.following.split(','): [];
     let following = await arrayIterator(followingIDList, getFollowingUsers);
-
+    
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
     recentPosts.forEach(post => {
         let rawDate = post.dataValues.createdAt
         let formattedDate = {
             "month": rawDate.getMonth(), 
+            "month": monthNames[rawDate.getMonth()], 
             "day": rawDate.getDate()
         }
         dates.push(formattedDate);
