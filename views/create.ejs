@@ -5,19 +5,24 @@
 </head>
 <body>
 	<%- include ('partials/header.ejs') %>
-	<form action="/create" enctype="multipart/form-data" method="POST">
-		<input type="text" name="title" placeholder="Post Title"><br>
-		<input type="text" name="common" placeholder="Common Name"><br>
-		<input type="text" name="scientific" placeholder="Scientific Name"><br>
-		<input type="text" name="location" placeholder="Location"><br>
-		<input type="text" name="precip" placeholder="Precipitation"><br>
-		<input type="text" name="temp" placeholder="Temperature"><br>
-		<input type="text" name="cloud" placeholder="Cloud Cover"><br>
-		<input type="text" name="observation" placeholder="Notes"><br>
-		<input type="file" name="upload" multiple="multiple"><br/>
-		<input type="submit" value="Upload">
-	</form>
-	
+	<div class="container">
+		<div class="row d-flex justify-content-center">
+			<div class="col-4">
+			<form action="/create" enctype="multipart/form-data" method="POST">
+				<input type="text" name="title" placeholder="Post Title"><br>
+				<input type="text" name="common" placeholder="Common Name"><br>
+				<input type="text" name="scientific" placeholder="Scientific Name"><br>
+				<input type="text" name="location" placeholder="Location"><br>
+				<input type="text" name="precip" placeholder="Precipitation"><br>
+				<input type="text" name="temp" placeholder="Temperature"><br>
+				<input type="text" name="cloud" placeholder="Cloud Cover"><br>
+				<input type="text" name="observation" placeholder="Notes"><br>
+				<input type="file" name="upload" multiple="multiple"><br/>
+				<input type="submit" value="Upload">
+			</form>
+			</div>
+		</div>
+	</div>
 <%- include ('partials/footer.ejs') %>
 
 <%- include ('partials/scripts.ejs') %>
