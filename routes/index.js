@@ -13,6 +13,7 @@ function getUsername(post, id) {
                     model: db.users,
                     required: true
                 }]})
+                console.log(result);
             res(result.dataValues.user.dataValues.username)
         }
         catch(err){
@@ -33,11 +34,30 @@ function getFollowingUsers(id) {
     })
 };
 
-async function arrayIterator(arr, action) {
+function userOrFollow(post, option){
+    return new Promise(async (res, _rej) => {
+        try {
+            if(option == "username"){
+                console.log('if');
+                const id = post.userID
+                res(id)
+            } 
+            else{
+                console.log('else');
+                const id = post.id
+                res(id)
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    })
+}
+
+async function arrayIterator(arr, action, option) {
     manipulatedArray = [];
     for (let i = 0; i < arr.length; i++) {
         const post = arr[i];
-        const id = post.id;
+        const id = await userOrFollow(post, option)
         const result = await action(post, id);
         manipulatedArray.push(result);
     }
@@ -59,9 +79,9 @@ router.get('/', gatekeeper, async (req,res) => {
         }
     });
 
-    let usernames = await arrayIterator(recentPosts, getUsername);
+    let usernames = await arrayIterator(recentPosts, getUsername, "username");
     let followingIDList = (record.following !== null)? record.following.split(','): [];
-    let following = await arrayIterator(followingIDList, getFollowingUsers);
+    let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
     
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
     recentPosts.forEach(post => {
@@ -73,8 +93,48 @@ router.get('/', gatekeeper, async (req,res) => {
         dates.push(formattedDate);
     });
 
+    console.log(record);
+    console.log("---------");
+    console.log(following);
+    console.log("---------");
+    console.log(recentPosts);
+    console.log("---------");
+    console.log(usernames);
+    console.log("-------");
+    console.log(dates);
+    
+    res.render('index', {
+        username: record.username,
+        following: following,
+        recentPosts: recentPosts,
+        dates: dates,
+        usernames: usernames
+    });
+});
+
+router.get('/user/:userPostsID', gatekeeper, async (req,res) => {
+    let userPostsID = req.params.userPostsID
+    let record = await db.users.findByPk(req.user.id);
+    let dates = [];
+    let date = new Date();
+    
+    date.setDate(date.getDate() - 3);
+    
+    let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
+
+    let usernames = await arrayIterator(recentPosts, getUsername, "username");
     let followingIDList = (record.following !== null)? record.following.split(','): [];
-    let following = await arrayIterator(followingIDList, getFollowingUsers);
+    let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+    
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+    recentPosts.forEach(post => {
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": monthNames[rawDate.getMonth()], 
+            "day": rawDate.getDate()
+        }
+        dates.push(formattedDate);
+    });
 
     console.log(record);
     console.log("---------");
