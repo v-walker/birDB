@@ -137,6 +137,7 @@ router.get('/user/:userPostsID', gatekeeper, async (req,res) => {
         dates.push(formattedDate);
     });
 
+
     console.log(record);
     console.log("---------");
     console.log(following);

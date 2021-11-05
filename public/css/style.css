@@ -73,6 +73,18 @@ Table Of Index
 .wide{
 width:100%;
 }
+.panel::-webkit-scrollbar {
+    width: 8px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+}
+
+.panel::-webkit-scrollbar-thumb {
+    background-color: #027373;
+    border-radius: 4px;
+}
+
+
 .chat-box{
 height: 30vh;
 border: #027373; 
