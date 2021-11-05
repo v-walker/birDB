@@ -73,13 +73,13 @@ router.get('/', gatekeeper, async (req,res) => {
     });
 
     // take these out before production
-    console.log(following);
-    console.log("---------");
-    console.log(recentPosts);
-    console.log("---------");
-    console.log(usernames);
-    console.log("-------");
-    console.log(dates);
+    // console.log(following);
+    // console.log("---------");
+    // console.log(recentPosts);
+    // console.log("---------");
+    // console.log(usernames);
+    // console.log("-------");
+    // console.log(dates);
     
     res.render('index', {
         username: record.username,

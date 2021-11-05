@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 const gatekeeper =  require('../auth');
 const db = require('../models');
 
@@ -34,7 +34,7 @@ async function arrayIterator(arr, action) {
 // });
 
 // GET /post/:postID
-router.get("/post/:postID",gatekeeper, async (req, res) => {
+router.get("/post/:postID", gatekeeper,async (req, res) => {
     try {
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
@@ -43,7 +43,8 @@ router.get("/post/:postID",gatekeeper, async (req, res) => {
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
-
+        console.log(comments);
+        
         res.render("post", {
             username: record.username,
             following: following,
@@ -52,7 +53,7 @@ router.get("/post/:postID",gatekeeper, async (req, res) => {
         });
     } catch {
         console.log('Error getting post');
-        res.redirect('/')
+        res.redirect('/');
     }
 });
 
