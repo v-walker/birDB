@@ -1,7 +1,32 @@
 const express = require('express');
-const router = express.Router()
+const router = express.Router();
 const gatekeeper =  require('../auth');
 const db = require('../models');
+
+// will refactor redundancies in http request methods later, but all information is currently being passed properly
+
+function getFollowingUsers(id) {
+    return new Promise(async (res, _rej) => {
+        try {
+            let result = await db.users.findByPk(id)
+            let userObj = {id: result.id, username: result.username}
+            res(userObj)
+        } catch(err) {
+            console.log(err);
+        }
+    })
+};
+
+async function arrayIterator(arr, action) {
+    manipulatedArray = [];
+    for (let i = 0; i < arr.length; i++) {
+        const post = arr[i];
+        const id = post.id;
+        const result = await action(post, id);
+        manipulatedArray.push(result);
+    }
+    return manipulatedArray;
+};
 
 // don't need this anymore? yes
 // router.get('/post', gatekeeper,(req, res) => {
@@ -16,15 +41,20 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
 
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
+        let followingIDList = (record.following !== null)? record.following.split(','): [];
+        let following = await arrayIterator(followingIDList, getFollowingUsers);
         console.log(comments);
+        
+
         res.render("post", {
             username: record.username,
+            following: following,
             post: post,
             comments: comments
         });
     } catch {
         console.log('Error getting post');
-        res.redirect('/')
+        res.redirect('/');
     }
 });
 
@@ -39,9 +69,12 @@ router.put('/post/:postID', async (req, res) => {
 
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
+        let followingIDList = (record.following !== null)? record.following.split(','): [];
+        let following = await arrayIterator(followingIDList, getFollowingUsers);
 
         res.render("post", {
             username: record.username,
+            following: following,
             post: post,
             comments: comments
         });
@@ -82,9 +115,12 @@ router.post('/post/:postID', async (req, res) => {
         
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
+        let followingIDList = (record.following !== null)? record.following.split(','): [];
+        let following = await arrayIterator(followingIDList, getFollowingUsers);
 
         res.render("post", {
-            // username: record.username,
+            username: record.username,
+            following: following,
             post: post,
             comments: comments
         });
@@ -108,9 +144,12 @@ router.put('/post/:postID/:commentID', async (req, res) => {
 
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
+        let followingIDList = (record.following !== null)? record.following.split(','): [];
+        let following = await arrayIterator(followingIDList, getFollowingUsers);
 
         res.render("post", {
-            // username: record.username,
+            username: record.username,
+            following: following,
             post: post,
             comments: comments
         });
@@ -133,9 +172,12 @@ router.delete('/post/:postID/:commentID', async (req, res) => {
 
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
+        let followingIDList = (record.following !== null)? record.following.split(','): [];
+        let following = await arrayIterator(followingIDList, getFollowingUsers);
 
         res.render("post", {
-            // username: record.username,
+            username: record.username,
+            following: following,
             post: post,
             comments: comments
         });

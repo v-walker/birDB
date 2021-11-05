@@ -31,7 +31,7 @@ function getFollowingUsers(id) {
             console.log(err);
         }
     })
-}
+};
 
 async function arrayIterator(arr, action) {
     manipulatedArray = [];
@@ -48,6 +48,7 @@ router.get('/', gatekeeper, async (req,res) => {
     let record = await db.users.findByPk(req.user.id);
     let dates = [];
     let date = new Date();
+    
     date.setDate(date.getDate() - 3);
     
     let recentPosts = await db.posts.findAll({
@@ -58,10 +59,10 @@ router.get('/', gatekeeper, async (req,res) => {
         }
     });
 
-    let usernames = await arrayIterator(recentPosts, getUsername)
-    // console.log('username list stuff', usernames);
-
-    // clean this up later and use "userArray function"
+    let usernames = await arrayIterator(recentPosts, getUsername);
+    let followingIDList = (record.following !== null)? record.following.split(','): [];
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
+    
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
     recentPosts.forEach(post => {
         let rawDate = post.dataValues.createdAt
@@ -90,7 +91,7 @@ router.get('/', gatekeeper, async (req,res) => {
         following: following,
         recentPosts: recentPosts,
         dates: dates,
-        usernames: usernames,
+        usernames: usernames
     });
 });
 

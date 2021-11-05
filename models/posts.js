@@ -24,7 +24,8 @@ module.exports = (sequelize, DataTypes) => {
     cloudCover: DataTypes.STRING,
     observation: DataTypes.STRING,
     likes: DataTypes.INTEGER,
-    userID: DataTypes.INTEGER
+    userID: DataTypes.INTEGER,
+    imgURL: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'posts',
