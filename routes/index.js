@@ -5,8 +5,6 @@ const db = require('../models');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
 
-// need to add following...
-
 function getUsername(post, id) {
     return new Promise(async (res, _rej) => {
         try{
@@ -15,7 +13,6 @@ function getUsername(post, id) {
                     model: db.users,
                     required: true
                 }]})
-                // console.log('in promise', result);
             res(result.dataValues.user.dataValues.username)
         }
         catch(err){
@@ -24,20 +21,12 @@ function getUsername(post, id) {
     })
 };
 
-// function getDates() {
-//     return new Promise(async (res, _rej) => {
-//         try {
-            
-//         } catch(err) {
-//             console.log(err);
-//         }
-//     })
-// }
-
-function getFollowers(id) {
+function getFollowingUsers(id) {
     return new Promise(async (res, _rej) => {
         try {
-            
+            let result = await db.users.findByPk(id)
+            let userObj = {id: result.id, username: result.username}
+            res(userObj)
         } catch(err) {
             console.log(err);
         }
@@ -81,7 +70,8 @@ router.get('/', gatekeeper, async (req,res) => {
         dates.push(formattedDate);
     });
 
-    let following = (record.following !== null)? record.following.split(','): [];
+    let followingIDList = (record.following !== null)? record.following.split(','): [];
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
 
     console.log(record);
     console.log("---------");

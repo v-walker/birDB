@@ -16,9 +16,11 @@ router.get("/post/:postID",gatekeeper, async (req, res) => {
 
         let post = await db.posts.findByPk(postID);
         let comments = await db.comments.findAll({where: {postID: postID}});
+        let following = (record.following !== null)? record.following.split(','): [];
 
         res.render("post", {
             username: record.username,
+            following: following,
             post: post,
             comments: comments
         });

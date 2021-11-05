@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     temperature: DataTypes.STRING,
     cloudCover: DataTypes.STRING,
     observation: DataTypes.STRING,
+    likes: DataTypes.INTEGER,
     userID: DataTypes.INTEGER
   }, {
     sequelize,
