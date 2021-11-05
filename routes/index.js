@@ -57,6 +57,7 @@ async function arrayIterator(arr, action, option) {
     manipulatedArray = [];
     for (let i = 0; i < arr.length; i++) {
         const post = arr[i];
+        // const id = post.userID
         const id = await userOrFollow(post, option)
         const result = await action(post, id);
         manipulatedArray.push(result);

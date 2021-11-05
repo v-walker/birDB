@@ -9,6 +9,7 @@ function getFollowingUsers(id) {
     return new Promise(async (res, _rej) => {
         try {
             let result = await db.users.findByPk(id)
+            console.log(result);
             let userObj = {id: result.id, username: result.username}
             res(userObj)
         } catch(err) {
@@ -63,10 +64,11 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
         console.log(comments);
-        
+        console.log(post);
 
         res.render("post", {
             username: record.username,
+            userID: record.id,
             following: following,
             post: post,
             comments: comments

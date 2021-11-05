@@ -1,4 +1,20 @@
+let commentForm = document.querySelector('#comment-form');
+let post = document.querySelector('.single-post');
 
+let id = post.attributes.value.value;
+let input = document.querySelector('#comment-form-message')
+let headers = {"Content-type": "application/json; charset=UTF-8"}
+
+
+
+
+commentForm.addEventListener('submit', (e) => {
+    const response = await fetch(`/post/${id}`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify({contens: input.value})
+    })
+})
 
 
 

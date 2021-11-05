@@ -10,7 +10,7 @@
 			<div class="row">
 				<div class="col-sm-8">
 					<article class="mb80">
-						<div class="single-post">
+						<div class="single-post" value='<%= post.id %>'>
 							<div class="cdf-image mb40 img-effect-1">
 								<img src="/img/blog/blog-single-image.jpg" alt="">
 								<figcaption></figcaption>
@@ -61,11 +61,11 @@
 								<div class="cdf-title mb30">
 									<h2>LEAVE A REPLY</h2>
 								</div>
-								<form action="php/contact-form.php" method="post" id="contact-form" name="contact-form">
+								<form action="php/contact-form.php" method="post" id="comment-form" name="comment-form">
 									<div class="contact-form-inner mb80">
 										<div class="row">
 											<div class="contact-form-field col-md-12">
-											<textarea id="contact-form-message" rows="5" placeholder="Type your message...."></textarea>
+											<textarea id="comment-form-message" rows="5" placeholder="Type your message...."></textarea>
 											<div class="cdf-btn cdf-btn-one submit">
 												<button type="submit">SEND MESSAGE</button>
 											</div>
