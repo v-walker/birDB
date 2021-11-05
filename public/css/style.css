@@ -174,7 +174,7 @@ margin-bottom: 85px;
 position: relative;
 font-size: 36px;
 font-family: 'Courier Prime', monospace;
-text-transform: uppercase;
+text-transform: lowercase;
 color: #040404;
 font-weight: bold;
 letter-spacing: 1.5px;
@@ -186,7 +186,7 @@ font-family: 'Courier Prime', monospace;
 font-weight: bold;
 font-size: 15px;
 letter-spacing: 2px;
-text-transform: uppercase;
+text-transform: lowercase;
 }
 
 .section-title strong {
@@ -233,7 +233,7 @@ background-color: transparent;
 color: #fff;
 text-align: center;
 font-weight: bold;
-text-transform: uppercase;
+text-transform: lowercase;
 display: block;
 line-height: 45px;
 }
@@ -244,7 +244,7 @@ background-color: transparent;
 color: #fff;
 text-align: center;
 font-weight: bold;
-text-transform: uppercase;
+text-transform: lowercase;
 display: block;
 line-height: 45px;
 border: 0 solid transparent;
@@ -433,8 +433,8 @@ ________________________________*/
 .border-bottom {border-bottom: 1px solid #ecf0f1 }
 
 /*======text Classes===========*/
-.text-uppercase {
-text-transform: uppercase;
+.text-lowercase {
+text-transform: lowercase;
 }
 /*********************************************************************
 ====================End All Reset Css==
@@ -680,7 +680,7 @@ line-height: 45px;
 }
 .cdf-search-button a {
 color: #fff;
-text-transform: uppercase;
+text-transform: lowercase;
 font-weight: bold;
 font-family: 'Courier Prime', monospace; 
 }
@@ -702,13 +702,13 @@ padding: 10px 0;
 /* background-color: rgba(2, 2, 2, 0.85); */
 }
 .page-breadcrumb .cdf-breadcrumb ul li, .cdf-breadcrumb ul li a {
-text-transform: uppercase;
+text-transform: lowercase;
 color: #027373;
 }
 .page-breadcrumb .page-header {
 padding-bottom: 9px;
 text-align: center;
-text-transform: uppercase;
+text-transform: lowercase;
 font-size: 36px;
 color: #fff;
 margin: 0;
@@ -733,7 +733,7 @@ transition: 0.5s;
 .item-box .cdf-title h2 {
 font-size: 16px;
 font-weight: bold;
-text-transform: uppercase;
+text-transform: none;
 color: #040404;
 	transition: 300ms linear;
 }
@@ -805,7 +805,7 @@ color: #fff;
 transition: 0.7s;
 }
 .item-box.effect-1:hover .box-overlay {
-background-color: rgba(30, 188, 97, 0.9);
+background-color: #027373;
 }
 .item-box.effect-1:hover .cdf-icon i  {
 color: #fff;
@@ -888,7 +888,7 @@ font-size: 50px;
 color: #027373;
 -webkit-transition: all 0.6s ease;
 transition: all 0.6s ease;
-text-transform: uppercase;
+text-transform: lowercase;
 }
 .img-effect-2:hover a {
 -webkit-transition-delay: 0.2s;
@@ -1405,7 +1405,7 @@ display: block;
 font-family: 'Courier Prime', monospace;
 padding-top: 10px;
 font-size: 18px;
-text-transform: uppercase;
+text-transform: lowercase;
 }
 .counter-item .counter {
 padding-top: 18px;
@@ -1573,7 +1573,7 @@ display: none;
 }
 .process-icons .cdf-title h2 {
 color: #fff;
-text-transform: uppercase;
+text-transform: lowercase;
 font-size: 18px;
 }
 
@@ -2017,8 +2017,8 @@ visibility: visible;
 }
 
 .member-carousel .process-section .carousel-indicators li.active {
-background: #1c954f;
-border: 1px solid #1c954f;
+background: #027373;
+border: 1px solid #027373;
 }
 .member-carousel  .carousel-indicators {
 left: 0;
@@ -2078,7 +2078,7 @@ width: 27%;
 background-color: #027373;
 font-family: 'Courier Prime', monospace;
 font-weight: bold;
-text-transform: uppercase;
+text-transform: lowercase;
 color: #fff;
 }
 .cdf-search input:focus {
@@ -2129,7 +2129,7 @@ padding-top: 15px;
 .contact-form-inner .cdf-title h2{
 font-size: 36px;
 font-family: 'Courier Prime', monospace;
-text-transform: uppercase;
+text-transform: lowercase;
 letter-spacing: 2px;
 margin-bottom: 80px;
 font-weight: lighter;
@@ -2141,7 +2141,7 @@ color: #027373;
 .contact-sidebar .cdf-title h2 {
 color: #027373;
 font-weight: bold;
-text-transform: uppercase;
+text-transform: lowercase;
 }
 .contact-sidebar .cdf-title h2 span {
 font-weight: lighter;
@@ -2159,7 +2159,7 @@ margin-right: 20px;
 }
 .get-information .cdf-client-name {
 padding-top: 0;
-text-transform: uppercase;
+text-transform: lowercase;
 color: #027373;
 }
 .get-information .cdf-client-designation {
@@ -2404,7 +2404,7 @@ text-align: center;
 }
 .controls button {
 font-size: 14px;
-text-transform: uppercase;
+text-transform: lowercase;
 padding: 10px 20px;
 border: none;
 color: #040404;
@@ -3108,7 +3108,7 @@ margin-bottom: 20px;
 }
 .footer-widget-title {
 margin-bottom: 40px;
-text-transform: uppercase;
+text-transform: lowercase;
 }
 .footer-widget-title h2 {
 font-size: 22px;	

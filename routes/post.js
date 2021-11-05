@@ -45,6 +45,7 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         console.log(comments);
         
+
         res.render("post", {
             username: record.username,
             following: following,
@@ -58,9 +59,9 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
 });
 
 // edit selected post
-router.put('/post/:postID', gatekeeper, async (req, res) => {
+router.put('/post/:postID', async (req, res) => {
     try {
-        let record = await db.users.findByPk(req.user.id);
+        // let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
         // pulling updated information from edit
         let {title, observation, imgURL} = req.body;
@@ -87,7 +88,7 @@ router.put('/post/:postID', gatekeeper, async (req, res) => {
 });
 
 // delete selected post
-router.delete('/post/:postID',gatekeeper, async (req, res) => {
+router.delete('/post/:postID', async (req, res) => {
     try {
         let postID = req.params.postID;
 
@@ -103,9 +104,9 @@ router.delete('/post/:postID',gatekeeper, async (req, res) => {
 });
 
 // add a comment to selected post
-router.post('/post/:postID',gatekeeper, async (req, res) => {
+router.post('/post/:postID', async (req, res) => {
     try {
-        let record = await db.users.findByPk(req.user.id);
+        // let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
         let {username, contents} = req.body;
         
@@ -132,9 +133,9 @@ router.post('/post/:postID',gatekeeper, async (req, res) => {
 });
 
 // editing comment
-router.put('/post/:postID/:commentID',gatekeeper, async (req, res) => {
+router.put('/post/:postID/:commentID', async (req, res) => {
     try {
-        let record = await db.users.findByPk(req.user.id);
+        // let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID
         let commentID = req.params.commentID;
         let updatedContents = req.body.updatedContents;
@@ -161,9 +162,9 @@ router.put('/post/:postID/:commentID',gatekeeper, async (req, res) => {
 });
 
 // deleting a comment
-router.delete('/post/:postID/:commentID',gatekeeper, async (req, res) => {
+router.delete('/post/:postID/:commentID', async (req, res) => {
     try {
-        let record = await db.users.findByPk(req.user.id);
+        // let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
         let commentID = req.params.commentID;
 

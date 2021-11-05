@@ -1,20 +1,21 @@
-<article class="mb80">
-    <div class="cdf-post relative pl70">
-        <div class="cdf-image"><img src="/img/blog/blog-image-5.jpg" alt="">
-            <div class="cdf-meta">
-                <ul class="post-meta">
-                    <li><a href="#">19 </a><span>AUG</span></li>
-                    <li><a href="#"><img src="/img/icons/Comments.png" alt=""> </a><span>09</span></li>
-                    <li><a href="#"><img src="/img/icons/like.png" alt=""> </a><span>05</span></li>
-                    <li><a href="#"><img src="/img/author/author-image-1.jpg" alt=""> </a></li>
-                    <!-- put in dates, comment/like numbers and images -->
-                </ul>
+<% for( let i = 0; i < recentPosts.length; i++ ) { %>
+    <article class="mb80">
+        <div class="cdf-post relative pl70">
+            <div class="cdf-image"><img src="/img/blog/blog-image-5.jpg" alt="">
+                <div class="cdf-meta">
+                    <ul class="post-meta">
+                        <li><a href="#"><%= dates[0].day %>  <%= dates[0].month %></a></li>
+                        <li><a href="#"><img src="/img/icons/Comments.png" alt=""> </a><span>09</span></li>
+                        <li style="padding-left: 25px;"><a href="#"><img src="/img/icons/like.png" alt=""> </a><span><%= recentPosts[0].likes %></span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cdf-content pt20 pl50">
+                <div class="cdf-title mb15"><h2><a href="/post/<%= recentPosts[0].id %>"><%= recentPosts[0].title %></a></h2></div>
+                <div class="cdf-text"><p><%= usernames[0] %></p></div>
+
+                <div class="cdf-btn cdf-btn-one mt20"><a href="/post/<%= recentPosts[0].id %>">read more</a></div>
             </div>
         </div>
-        <div class="cdf-content pt20 pl50">
-            <div class="cdf-title mb15"><h2><a href="#">Our Successive Progress Might Help You to Prospective Customer Projects</a></h2></div>
-            <div class="cdf-text"><p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris magni dolores quis nostrud exercitation. Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut laboreipsam.</p></div>
-            <div class="cdf-btn cdf-btn-one mt20"><a href="#">read more</a></div>
-        </div>
-    </div>
-</article>
+    </article>
+ <% } %>

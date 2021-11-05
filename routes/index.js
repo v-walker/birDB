@@ -67,21 +67,24 @@ router.get('/', gatekeeper, async (req,res) => {
     recentPosts.forEach(post => {
         let rawDate = post.dataValues.createdAt
         let formattedDate = {
-            "month": rawDate.getMonth(), 
             "month": monthNames[rawDate.getMonth()], 
             "day": rawDate.getDate()
         }
         dates.push(formattedDate);
     });
 
-    // take these out before production
-    // console.log(following);
-    // console.log("---------");
-    // console.log(recentPosts);
-    // console.log("---------");
-    // console.log(usernames);
-    // console.log("-------");
-    // console.log(dates);
+    let followingIDList = (record.following !== null)? record.following.split(','): [];
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
+
+    console.log(record);
+    console.log("---------");
+    console.log(following);
+    console.log("---------");
+    console.log(recentPosts);
+    console.log("---------");
+    console.log(usernames);
+    console.log("-------");
+    console.log(dates);
     
     res.render('index', {
         username: record.username,
