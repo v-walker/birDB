@@ -10,97 +10,51 @@
 			<div class="row">
 				<div class="col-sm-8">
 					<article class="mb80">
-						<div class="single-post" id="append-post">
-
+						<div class="single-post">
+							<div class="cdf-image mb40 img-effect-1">
+								<img src="/img/blog/blog-single-image.jpg" alt="">
+								<figcaption></figcaption>
+							</div>
+							<div class="cdf-single-meta ul-li mb15">
+								<ul>
+									<li class="admin"><strong>Written</strong> by USERNAME</li>
+									<li class="post-time"> DATE </li>
+								</ul>
+							</div>
+							<div class="cdf-title mb20">
+								<h2><a href="#"><%= post.title %> </a></h2>
 							</div>
 
-							<div class="related-post clearfix">
-								<div class="cdf-post prev-post col-sm-6 padding0">
-									<div class="cdf-image pull-left mr20"><img src="/img/blog/related-image1.jpg" alt=""></div>
-									<div class="cdf-content">
-										<div class="cdf-title mb10"><h2><a href="#">Lorem ipsum dolor sit amep consectetur</a></h2></div>
-										<div class="cdf-link"><a href="#"><i class="arrow_triangle-left_alt mr5"></i> Preveous</a></div>
-									</div>
-								</div>
-								<div class="cdf-post prev-post col-sm-6 padding0">
-									<div class="cdf-image pull-right ml20"><img src="/img/blog/related-image1.jpg" alt=""></div>
-									<div class="cdf-content text-right">
-										<div class="cdf-title mb10"><h2><a href="#">Lorem ipsum dolor sit consectetur</a></h2></div>
-										<div class="cdf-link"><a href="#">Next <i class="arrow_triangle-right_alt ml5"></i></a></div>
-									</div>
+							<div class="cdf-text">
+								<p>Common Name: <%= post.commonName %> </p>
+								<p>Scientific Name: <%= post.scientificName %> </p>
+								<p>Location: <%= post.location %> </p>
+								<p>Temperature: <%= post.temperature %> </p>
+								<p>Precipitation: <%= post.precipitation %> </p>
+								<p>Cloud Cover: <%= post.cloudCover %> </p>
+								<p>Observations: <%= post.observation %> </p>
 								</div>
 							</div>
-							<!-- related-post -->
-							<div class="post-author clearfix  mb40">
-								<div class="author-meta clearfix">
-									<div class="author-meta-avatar pull-left mr10">
-										<a href="#"><img src="/img/blog/author.jpg" alt=""></a>
-									</div>
-									<div class="author-meta-content">
-										<div class="author-meta-heading clearfix">
-											<div class="author-name-designation pull-left mb10">
-												<div class="cdf-author-name"><h2><a href="#">Celia Maria</a></h2></div>
-												<div class="cdf-author-designation">CEO of Graphia</div>
-											</div>
-											<div class="author-social-links ul-li pull-right">
-												<ul>
-													<li><a href="#"><i class="social_facebook"></i></a></li>
-													<li><a href="#"><i class="social_twitter"></i></a></li>
-													<li><a href="#"><i class="social_googleplus"></i></a></li>
-													<li><a href="#"><i class="social_tumblr"></i></a></li>
-												</ul>
-											</div>
-											<!-- .author-links-wrap -->
-										</div>
-										<div class="cdf-text">
-											<p>Cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae.</p>
-										</div>
-									</div>
-								</div>
-							</div>
+
 							<!-- post-author -->
 							<div class="post-comments-area padding-top80">
-								<h3 class="sub-title padding-bottom50"> Comments [03]</h3>
+								<h3 class="sub-title padding-bottom50"> Comments [<%= comments.length %>]</h3>
 								<ul class="comments-list">
-									<li class="parent">
-										<div class="comments-img">
-											<img class="img-responsive" src="/img/blog/author.jpg" alt="Post Iamge">
-										</div>
-										<div class="comments-txt dark-bg content-box">
-											<div class="author mb10">
-												<a href="#" class="">Cynthia </a> 
-												<span>23 Aug, 2016</span>
+									<% comments.forEach(comment => { %>
+										<li class="parent">
+											<div class="comments-img">
+												<img class="img-responsive" src="/img/blog/author.jpg" alt="Post Iamge">
 											</div>
-											<p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-											<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
-										</div>
-									</li>
-									<li class="children">
-										<div class="comments-img">
-											<img class="img-responsive" src="/img/blog/author.jpg" alt="Post Iamge">
-										</div>
-										<div class="comments-txt dark-bg content-box">
-											<div class="author mb10">
-												<a href="#" class="">Gio Riveris</a>
-												<span>23 Aug, 2016</span>
+											<div class="comments-txt dark-bg content-box">
+												<div class="author mb10">
+													<a href="#" class=""><%= comment.username %>  </a> 
+													<span>DATE</span>
+												</div>
+												<p><%= comment.contents %> </p>
+												<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
 											</div>
-											<p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-											<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
-										</div>
-									</li>
-									<li class="parent">
-										<div class="comments-img">
-											<img class="img-responsive" src="/img/blog/author.jpg" alt="Post Iamge">
-										</div>
-										<div class="comments-txt dark-bg content-box">
-											<div class="author mb10">
-												<a href="#" class="">Eva Eden</a> 
-												<span>23 Aug, 2016</span>
-											</div>
-											<p>Lorem ipsum dolor sit amet consectetur adipisicing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-											<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
-										</div>
-									</li>
+										</li>
+									<% }) %>
 								</ul>
 							</div><!-- /.post-comments-area -->
 							<div id="leave-comment" class="pb80">
@@ -136,8 +90,7 @@
 									<button type="submit"><i class="icon_search"></i></button>
 								</form>
 							</div>
-							<!-- search -->
-							<!-- <%- include ('partials/followingSkeleton.ejs') %> 
+							<!-- search 
 
 							<%- include ('partials/recentSkeleton.ejs') %>  -->
 						</div>
