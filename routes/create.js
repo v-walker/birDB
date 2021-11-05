@@ -14,8 +14,8 @@ cloudinary.config({
     api_secret: process.env.API_SECRET
 });
 
-router.get("/create", gatekeeper, async(req, res) => {
-    
+router.get("/create", gatekeeper, async (req, res) => {
+
     let record = await db.users.findByPk(req.user.id)
     res.render("create",
     {
@@ -24,25 +24,23 @@ router.get("/create", gatekeeper, async(req, res) => {
     )
 })
 
-router.post('/create', (req, res, next) => {
-    // pulls encrypted form from header and parses out with formidable
+router.post('/create', async (req, res, next) => {
+    let userID = req.user.id
     const form = new formidable.IncomingForm();
     let uploadFolder = path.join(__dirname, "../public", "files")
     form.uploadDir = uploadFolder
-    form.parse(req, (err, fields, files) => {
+    form.parse(req, async (err, fields, files) => {
         if (err) {
             next()
             return
         }
-        console.log(fields)
-        // uploads image to cloudinary and deletes temp file with fs
-        cloudinary.uploader.upload(files.upload.filepath, result => {
+        // await db.posts.create({title: fields.title, commonName: fields.common, scientificName: fields.scientific, location: fields.location, precipitation: fields.precip, temperature: fields.temp, cloudCover: fields.cloud, observation: fields.observation, likes: "0", userID: userID, imgURL: "www.bird.com"})
+        cloudinary.uploader.upload(files.upload.filepath, async result => {
             console.log("this is the result", result)
-            console.log(result.secure_url)
+            await db.posts.create({title: fields.title, commonName: fields.common, scientificName: fields.scientific, location: fields.location, precipitation: fields.precip, temperature: fields.temp, cloudCover: fields.cloud, observation: fields.observation, likes: "0", userID: userID, imgURL: result.secure_url})
+            // await db.posts.update({imgURL: result.secure_url}, {where: {imgURL: "www.bird.com"}});
         })
         fs.unlinkSync(files.upload.filepath);
-        // end image upload functionality
-        
     });
     res.redirect("/")
 });
