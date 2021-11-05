@@ -24,15 +24,15 @@ function getUsername(post, id) {
     })
 };
 
-function getDates() {
-    return new Promise(async (res, _rej) => {
-        try {
+// function getDates() {
+//     return new Promise(async (res, _rej) => {
+//         try {
             
-        } catch(err) {
-            console.log(err);
-        }
-    })
-}
+//         } catch(err) {
+//             console.log(err);
+//         }
+//     })
+// }
 
 function getFollowers(id) {
     return new Promise(async (res, _rej) => {
@@ -72,7 +72,6 @@ router.get('/', gatekeeper, async (req,res) => {
     let usernames = await arrayIterator(recentPosts, getUsername)
     // console.log('username list stuff', usernames);
 
-    // clean this up later and use "userArray function"
     recentPosts.forEach(post => {
         let rawDate = post.dataValues.createdAt
         let formattedDate = {
@@ -82,6 +81,12 @@ router.get('/', gatekeeper, async (req,res) => {
         dates.push(formattedDate);
     });
 
+    let following = (record.following !== null)? record.following.split(','): [];
+
+    console.log(record);
+    console.log("---------");
+    console.log(following);
+    console.log("---------");
     console.log(recentPosts);
     console.log("---------");
     console.log(usernames);
@@ -90,6 +95,7 @@ router.get('/', gatekeeper, async (req,res) => {
     
     res.render('index', {
         username: record.username,
+        following: following,
         recentPosts: recentPosts,
         dates: dates,
         usernames: usernames,
