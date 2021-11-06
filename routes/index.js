@@ -119,48 +119,48 @@ router.get('/', gatekeeper, async (req,res) => {
     });
 });
 
-// router.get('/user/:userPostsID', gatekeeper, async (req,res) => {
-//     let userPostsID = req.params.userPostsID
-//     let record = await db.users.findByPk(req.user.id);
-//     let dates = [];
-//     let date = new Date();
+router.get('/user/:userPostsID', gatekeeper, async (req,res) => {
+    let userPostsID = req.params.userPostsID
+    let record = await db.users.findByPk(req.user.id);
+    let dates = [];
+    let date = new Date();
     
-//     date.setDate(date.getDate() - 3);
+    date.setDate(date.getDate() - 3);
     
-//     let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
+    let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
 
-//     let usernames = await arrayIterator(recentPosts, getUsername, "username");
-//     let followingIDList = (record.following !== null)? record.following.split(','): [];
-//     let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+    let usernames = await arrayIterator(recentPosts, getUsername);
+    let followingIDList = (record.following !== null)? record.following.split(','): [];
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
     
-//     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
-//     recentPosts.forEach(post => {
-//         let rawDate = post.dataValues.createdAt
-//         let formattedDate = {
-//             "month": monthNames[rawDate.getMonth()], 
-//             "day": rawDate.getDate()
-//         }
-//         dates.push(formattedDate);
-//     });
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+    recentPosts.forEach(post => {
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": monthNames[rawDate.getMonth()], 
+            "day": rawDate.getDate()
+        }
+        dates.push(formattedDate);
+    });
 
-//     console.log(record);
-//     console.log("---------");
-//     console.log(following);
-//     console.log("---------");
-//     console.log(recentPosts);
-//     console.log("---------");
-//     console.log(usernames);
-//     console.log("-------");
-//     console.log(dates);
+    console.log(record);
+    console.log("---------");
+    console.log(following);
+    console.log("---------");
+    console.log(recentPosts);
+    console.log("---------");
+    console.log(usernames);
+    console.log("-------");
+    console.log(dates);
     
-//     res.render('index', {
-//         username: record.username,
-//         following: following,
-//         recentPosts: recentPosts,
-//         dates: dates,
-//         usernames: usernames
-//     });
-// });
+    res.render('index', {
+        username: record.username,
+        following: following,
+        recentPosts: recentPosts,
+        dates: dates,
+        usernames: usernames
+    });
+});
 
 router.get('/logout',(req,res) => {
     req.logout()
