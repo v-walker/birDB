@@ -105,13 +105,12 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         // for individual post
         let post = await db.posts.findByPk(postID);
         let postUserID = post.dataValues.userID;
-        let postUsername = await getUsername(postID, postUserID)
+        let postUsername = await getUsername(postID, postUserID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
-        // console.log(comments);
         let rawDate = post.dataValues.createdAt;
-        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()}
+        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
         
 
         // recent posts
@@ -147,21 +146,36 @@ router.put('/post/:postID', async (req, res) => {
         let {title, observation, imgURL} = req.body;
         await db.posts.update({title: title, observation: observation, imgURL: imgURL}, {where: {id: postID}});
 
+        // individual post
         let post = await db.posts.findByPk(postID);
+        let postUserID = post.dataValues.userID;
+        let postUsername = await getUsername(postID, postUserID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+        let rawDate = post.dataValues.createdAt;
+        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
+
+        // recent posts
+        let recentPosts = await getRecentPosts(date);
+        let dates = getDates(recentPosts);
+        let usernames = await arrayIterator(recentPosts, getUsername, "username");
 
         res.render("post", {
             username: record.username,
+            userID: record.id,
             following: following,
             post: post,
-            comments: comments
+            postUsername: postUsername,
+            comments: comments,
+            date: formattedDate,
+            recentPosts: recentPosts,
+            dates: dates,
+            usernames: usernames
         });
-        // res.json({post, comments});
     } catch {
         console.log("error while updating post");
-        res.render('post', {
+        res.render("post", {
             error: "Error while updating post."
         })
     }
