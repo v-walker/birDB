@@ -5,6 +5,25 @@ const db = require('../models');
 
 // will refactor redundancies in http request methods later, but all information is currently being passed properly
 
+const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+
+function getUsername(post, id) {
+    return new Promise(async (res, _rej) => {
+        try{
+            let result = await db.posts.findByPk(id, {
+                include: [{
+                    model: db.users,
+                    required: true
+                }]})
+                console.log(result);
+            res(result.dataValues.user.dataValues.username)
+        }
+        catch(err){
+            console.log(err);
+        }
+    })
+};
+
 function getFollowingUsers(id) {
     return new Promise(async (res, _rej) => {
         try {
@@ -36,6 +55,31 @@ function userOrFollow(post, option){
     })
 }
 
+function getDates(arr) {
+    let dates = [];
+    arr.forEach(post => {
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": monthNames[rawDate.getMonth()], 
+            "day": rawDate.getDate()
+        }
+        dates.push(formattedDate);
+    });
+    return dates;
+};
+
+async function getRecentPosts(date) {
+    let recentPosts = await db.posts.findAll({
+        where: {
+            createdAt: {
+                [Op.gte]: date
+            }
+        },
+        limit: 2
+    });
+    return recentPosts
+}
+
 async function arrayIterator(arr, action, option) {
     manipulatedArray = [];
     for (let i = 0; i < arr.length; i++) {
@@ -58,18 +102,35 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
 
+        // for individual post
         let post = await db.posts.findByPk(postID);
+        let postUserID = post.dataValues.userID;
+        let postUsername = await getUsername(postID, postUserID)
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
-        console.log(comments);
+        // console.log(comments);
+        let rawDate = post.dataValues.createdAt;
+        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()}
         
+
+        // recent posts
+        let recentPosts = await getRecentPosts(date);
+        let dates = getDates(recentPosts);
+        let usernames = await arrayIterator(recentPosts, getUsername, "username");
 
         res.render("post", {
             username: record.username,
+            userID: record.id,
             following: following,
             post: post,
-            comments: comments
+            postUsername: postUsername,
+            comments: comments,
+            date: formattedDate,
+            recentPosts: recentPosts,
+            dates: dates,
+            usernames: usernames
+
         });
     } catch {
         console.log('Error getting post');
