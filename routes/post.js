@@ -200,23 +200,39 @@ router.delete('/post/:postID', async (req, res) => {
 // add a comment to selected post
 router.post('/post/:postID', async (req, res) => {
     try {
-        // let record = await db.users.findByPk(req.user.id);
+        let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
         let {username, contents} = req.body;
         
         // allow to post new comment to db (associated with a post)
         await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
         
+        // individual post
         let post = await db.posts.findByPk(postID);
+        let postUserID = post.dataValues.userID;
+        let postUsername = await getUsername(postID, postUserID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+        let rawDate = post.dataValues.createdAt;
+        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
+
+        // recent posts
+        let recentPosts = await getRecentPosts(date);
+        let dates = getDates(recentPosts);
+        let usernames = await arrayIterator(recentPosts, getUsername, "username");
 
         res.render("post", {
             username: record.username,
+            userID: record.id,
             following: following,
             post: post,
-            comments: comments
+            postUsername: postUsername,
+            comments: comments,
+            date: formattedDate,
+            recentPosts: recentPosts,
+            dates: dates,
+            usernames: usernames
         });
     } catch {
         console.log("Error while creating new comment");
@@ -236,16 +252,32 @@ router.put('/post/:postID/:commentID', async (req, res) => {
 
         await db.comments.update({contents: updatedContents}, {where: {id: commentID}});
 
+        // individual post
         let post = await db.posts.findByPk(postID);
+        let postUserID = post.dataValues.userID;
+        let postUsername = await getUsername(postID, postUserID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+        let rawDate = post.dataValues.createdAt;
+        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
+
+        // recent posts
+        let recentPosts = await getRecentPosts(date);
+        let dates = getDates(recentPosts);
+        let usernames = await arrayIterator(recentPosts, getUsername, "username");
 
         res.render("post", {
             username: record.username,
+            userID: record.id,
             following: following,
             post: post,
-            comments: comments
+            postUsername: postUsername,
+            comments: comments,
+            date: formattedDate,
+            recentPosts: recentPosts,
+            dates: dates,
+            usernames: usernames
         });
     } catch {
         console.log("Error occurred while updating comment");
@@ -264,16 +296,32 @@ router.delete('/post/:postID/:commentID', async (req, res) => {
 
         await db.comments.destroy({where: {id: commentID}});
 
+        // individual post
         let post = await db.posts.findByPk(postID);
+        let postUserID = post.dataValues.userID;
+        let postUsername = await getUsername(postID, postUserID);
         let comments = await db.comments.findAll({where: {postID: postID}});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+        let rawDate = post.dataValues.createdAt;
+        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
+
+        // recent posts
+        let recentPosts = await getRecentPosts(date);
+        let dates = getDates(recentPosts);
+        let usernames = await arrayIterator(recentPosts, getUsername, "username");
 
         res.render("post", {
             username: record.username,
+            userID: record.id,
             following: following,
             post: post,
-            comments: comments
+            postUsername: postUsername,
+            comments: comments,
+            date: formattedDate,
+            recentPosts: recentPosts,
+            dates: dates,
+            usernames: usernames
         });
     } catch {
         console.log("Error occurred while deleting comment");
