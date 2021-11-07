@@ -9,17 +9,16 @@ const {monthNames, getUsername, getFollowingUsers, getDates, getRecentPosts, arr
 let date = new Date();
 date.setDate(date.getDate() - 3);
 
-// const getIndividualPostData = (record, post, postID) => {
+// const getIndividualPostData = (record, post, postID, postUserID) => {
 //     return new Promise(async (res, _rej) => {
 //         try {
-//             let postUserID = post.dataValues.userID;
-//             let postUser = await db.users.findByPk(postUserID);
-//             let postUsername = postUser.username;
-//             let comments = await db.comments.findAll({where: {postID: postID}});
-//             let followingIDList = (record.following !== null)? record.following.split(','): [];
-//             let following = await arrayIterator(followingIDList, getFollowingUsers);
-//             let rawDate = post.dataValues.createdAt;
-//             let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
+//             const postUser = await db.users.findByPk(postUserID);
+//             const postUsername = postUser.username;
+//             const comments = await db.comments.findAll({where: {postID: postID}});
+//             const followingIDList = (record.following !== null)? record.following.split(','): [];
+//             const following = await arrayIterator(followingIDList, getFollowingUsers);
+//             const rawDate = post.dataValues.createdAt;
+//             const formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
 //             res({postUsername, comments, following, formattedDate})
 //         } catch (err) {
 //             console.log(err);
@@ -38,12 +37,12 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let postUserID = post.dataValues.userID;
         let postUser = await db.users.findByPk(postUserID);
         let postUsername = postUser.username;
-        let comments = await db.comments.findAll({where: {postID: postID}});
+        let comments = await db.comments.findAll({where: {postID: postID}, order: [['id', 'DESC']]});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
         let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-        // let {postUsername, comments, following, formattedDate} = getIndividualPostData(record, post, postID);
+        // let {postUsername, comments, following, formattedDate} = getIndividualPostData(record, post, postID, postUserID);
         // console.log(`postUsername: ${postUsername}`);
         // console.log("----------");
         // console.log(`comments: ${comments}`);
@@ -92,7 +91,7 @@ router.put('/post/:postID', async (req, res) => {
         let postUserID = post.dataValues.userID;
         let postUser = await db.users.findByPk(postUserID);
         let postUsername = postUser.username;
-        let comments = await db.comments.findAll({where: {postID: postID}});
+        let comments = await db.comments.findAll({where: {postID: postID}, order: [['id', 'DESC']]});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
@@ -154,7 +153,7 @@ router.post('/post/:postID', async (req, res) => {
         let postUserID = post.dataValues.userID;
         let postUser = await db.users.findByPk(postUserID);
         let postUsername = postUser.username;
-        let comments = await db.comments.findAll({where: {postID: postID}});
+        let comments = await db.comments.findAll({where: {postID: postID}, order: [['id', 'DESC']]});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
@@ -200,7 +199,7 @@ router.put('/post/:postID/:commentID', async (req, res) => {
         let postUserID = post.dataValues.userID;
         let postUser = await db.users.findByPk(postUserID);
         let postUsername = postUser.username;
-        let comments = await db.comments.findAll({where: {postID: postID}});
+        let comments = await db.comments.findAll({where: {postID: postID}, order: [['id', 'DESC']]});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
@@ -245,7 +244,7 @@ router.delete('/post/:postID/:commentID', async (req, res) => {
         let postUserID = post.dataValues.userID;
         let postUser = await db.users.findByPk(postUserID);
         let postUsername = postUser.username;
-        let comments = await db.comments.findAll({where: {postID: postID}});
+        let comments = await db.comments.findAll({where: {postID: postID}, order: [['id', 'DESC']]});
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;

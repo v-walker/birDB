@@ -18,7 +18,8 @@ router.get('/', gatekeeper, async (req,res) => {
             createdAt: {
                 [Op.gte]: date
             }
-        }
+        },
+        order: [['id', 'DESC']]
     });
 
     let usernames = await arrayIterator(recentPosts, getUsername);

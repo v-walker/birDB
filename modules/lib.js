@@ -51,7 +51,8 @@ async function getRecentPosts(date) {
                 [Op.gte]: date
             }
         },
-        limit: 2
+        limit: 2,
+        order: [['id', 'DESC']]
     });
     return recentPosts
 }
