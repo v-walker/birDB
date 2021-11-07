@@ -4,42 +4,10 @@ const gatekeeper =  require("../auth");
 const db = require("../models");
 const Sequelize = require("sequelize")
 const Op = Sequelize.Op;
-const {monthNames, getUsername, getFollowingUsers, getDates, getRecentPosts, arrayIterator} = require("../modules/lib")
+const {getIndividualPostData, getRecentPostData} = require("../modules/lib")
 
 let date = new Date();
 date.setDate(date.getDate() - 3);
-
-const getIndividualPostData = (record, postID) => {
-    return new Promise(async (res, _rej) => {
-        try {
-            let post = await db.posts.findByPk(postID);
-            let postUserID = post.dataValues.userID;
-            let postUser = await db.users.findByPk(postUserID);
-            let postUsername = postUser.username;
-            let comments = await db.comments.findAll({where: {postID: postID}});
-            let followingIDList = (record.following !== null)? record.following.split(','): [];
-            let following = await arrayIterator(followingIDList, getFollowingUsers);
-            let rawDate = post.dataValues.createdAt;
-            let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-            res({post: post, postUsername: postUsername, comments: comments, following: following, formattedDate: formattedDate});
-        } catch (err) {
-            console.log(err);
-        }
-    });
-};
-
-const getRecentPostData = (date) => {
-    return new Promise(async (res, _rej) => {
-        try {
-            let recentPosts = await getRecentPosts(date);
-            let dates = getDates(recentPosts);
-            let usernames = await arrayIterator(recentPosts, getUsername);
-            res({recentPosts: recentPosts, dates: dates, usernames: usernames});
-        } catch (err) {
-            console.log(err);
-        }
-    })
-}
 
 // GET /post/:postID
 router.get("/post/:postID", gatekeeper,async (req, res) => {
