@@ -1,6 +1,6 @@
 const express = require("express");
 const db = require("../models");
-const Sequelize = require('sequelize')
+const Sequelize = require("sequelize")
 const Op = Sequelize.Op;
 
 const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];

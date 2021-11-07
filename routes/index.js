@@ -1,10 +1,10 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router()
-const gatekeeper =  require('../auth');
-const db = require('../models');
-const Sequelize = require('sequelize')
+const gatekeeper =  require("../auth");
+const db = require("../models");
+const Sequelize = require("sequelize")
 const Op = Sequelize.Op;
-const {monthNames, getUsername, getFollowingUsers, getDates, getRecentPosts, arrayIterator} = require("../modules/lib")
+const {monthNames, getUsername, getFollowingUsers, arrayIterator} = require("../modules/lib")
 
 router.get('/', gatekeeper, async (req,res) => {
     let record = await db.users.findByPk(req.user.id);
