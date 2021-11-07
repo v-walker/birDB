@@ -9,6 +9,7 @@ let headers = {"Content-type": "application/json; charset=UTF-8"}
 
 
 commentForm.addEventListener('submit', (e) => {
+    e.preventDefault()
     const response = await fetch(`/post/${id}`, {
         method: 'POST',
         headers,
