@@ -33,17 +33,6 @@ router.get('/', gatekeeper, async (req,res) => {
         }
         dates.push(formattedDate);
     });
-
-
-    // console.log(record);
-    // console.log("---------");
-    // console.log(following);
-    // console.log("---------");
-    // console.log(recentPosts);
-    // console.log("---------");
-    // console.log(usernames);
-    // console.log("-------");
-    // console.log(dates);
     
     res.render('index', {
         username: record.username,
