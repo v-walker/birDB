@@ -4,102 +4,10 @@ const gatekeeper =  require('../auth');
 const db = require('../models');
 const Sequelize = require('sequelize')
 const Op = Sequelize.Op;
+const {monthNames, getUsername, getFollowingUsers, getDates, getRecentPosts, arrayIterator} = require("../modules/lib")
 
-// will refactor redundancies in http request methods later, but all information is currently being passed properly
-
-const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
 let date = new Date();
-    
 date.setDate(date.getDate() - 3);
-
-
-function getUsername(post, id) {
-    return new Promise(async (res, _rej) => {
-        try{
-            let post = await db.posts.findByPk(id);
-            console.log(post);
-            let userID = post.userID;
-            let result = await db.users.findByPk(userID);
-            console.log(`Full result: ${result.dataValues.username}`);
-            res(result.dataValues.username)
-        }
-        catch(err){
-            console.log(err);
-        }
-    })
-};
-
-function getFollowingUsers(id) {
-    return new Promise(async (res, _rej) => {
-        try {
-            let result = await db.users.findByPk(id)
-            let userObj = {id: result.id, username: result.username}
-            res(userObj)
-        } catch(err) {
-            console.log(err);
-        }
-    })
-};
-
-// function userOrFollow(post, option){
-//     return new Promise(async (res, _rej) => {
-//         try {
-//             if(option == "username"){
-//                 console.log('if');
-//                 const id = post.userID
-//                 res(id)
-//             } 
-//             else{
-//                 console.log('else');
-//                 const id = post.id
-//                 res(id)
-//             }
-//         } catch(err) {
-//             console.log(err);
-//         }
-//     })
-// }
-
-function getDates(arr) {
-    let dates = [];
-    arr.forEach(post => {
-        let rawDate = post.dataValues.createdAt
-        let formattedDate = {
-            "month": monthNames[rawDate.getMonth()], 
-            "day": rawDate.getDate()
-        }
-        dates.push(formattedDate);
-    });
-    return dates;
-};
-
-async function getRecentPosts(date) {
-    let recentPosts = await db.posts.findAll({
-        where: {
-            createdAt: {
-                [Op.gte]: date
-            }
-        },
-        limit: 2
-    });
-    return recentPosts
-}
-
-async function arrayIterator(arr, action) {
-    manipulatedArray = [];
-    for (let i = 0; i < arr.length; i++) {
-        const post = arr[i];
-        const id = post.id;
-        const result = await action(post, id);
-        manipulatedArray.push(result);
-    }
-    return manipulatedArray;
-};
-
-// don't need this anymore? yes
-// router.get('/post', gatekeeper,(req, res) => {
-//     res.render("post");
-// });
 
 // GET /post/:postID
 router.get("/post/:postID", gatekeeper,async (req, res) => {
@@ -137,8 +45,8 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
             usernames: usernames
 
         });
-    } catch {
-        console.log('Error getting post');
+    } catch (err) {
+        console.log(err);
         res.redirect('/');
     }
 });
@@ -181,10 +89,10 @@ router.put('/post/:postID', async (req, res) => {
             dates: dates,
             usernames: usernames
         });
-    } catch {
-        console.log("error while updating post");
+    } catch (err) {
+        console.log(err);
         res.render("post", {
-            error: "Error while updating post."
+            error: err
         })
     }
 });
@@ -197,10 +105,10 @@ router.delete('/post/:postID', async (req, res) => {
         await db.posts.destroy({where: {id: postID}});
         // redirect to home/landing page
         res.redirect('/');
-    } catch {
-        console.log("error while deleting post");
+    } catch (err) {
+        console.log(err);
         res.render('post', {
-            error: "Error occurred while deleting post"
+            error: err
         })
     }
 });
@@ -243,10 +151,10 @@ router.post('/post/:postID', async (req, res) => {
             dates: dates,
             usernames: usernames
         });
-    } catch {
-        console.log("Error while creating new comment");
+    } catch (err) {
+        console.log(err);
         res.render("post", {
-            error: "Error occurred while creating new comment"
+            error: err
         })
     }
 });
@@ -290,9 +198,9 @@ router.put('/post/:postID/:commentID', async (req, res) => {
             usernames: usernames
         });
     } catch {
-        console.log("Error occurred while updating comment");
+        console.log(err);
         res.render("post", {
-            error: "Error occurred while updating comment"
+            error: err
         })
     }
 });
@@ -335,9 +243,9 @@ router.delete('/post/:postID/:commentID', async (req, res) => {
             usernames: usernames
         });
     } catch {
-        console.log("Error occurred while deleting comment");
+        console.log(err);
         res.render("post", {
-            error: "Error occurred while deleting comment"
+            error: err
         })
     }
 });
