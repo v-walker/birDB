@@ -9,6 +9,24 @@ const {monthNames, getUsername, getFollowingUsers, getDates, getRecentPosts, arr
 let date = new Date();
 date.setDate(date.getDate() - 3);
 
+// const getIndividualPostData = (record, post, postID) => {
+//     return new Promise(async (res, _rej) => {
+//         try {
+//             let postUserID = post.dataValues.userID;
+//             let postUser = await db.users.findByPk(postUserID);
+//             let postUsername = postUser.username;
+//             let comments = await db.comments.findAll({where: {postID: postID}});
+//             let followingIDList = (record.following !== null)? record.following.split(','): [];
+//             let following = await arrayIterator(followingIDList, getFollowingUsers);
+//             let rawDate = post.dataValues.createdAt;
+//             let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
+//             res({postUsername, comments, following, formattedDate})
+//         } catch (err) {
+//             console.log(err);
+//         }
+//     });
+// };
+
 // GET /post/:postID
 router.get("/post/:postID", gatekeeper,async (req, res) => {
     try {
@@ -25,7 +43,15 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
         let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-        
+        // let {postUsername, comments, following, formattedDate} = getIndividualPostData(record, post, postID);
+        // console.log(`postUsername: ${postUsername}`);
+        // console.log("----------");
+        // console.log(`comments: ${comments}`);
+        // console.log("----------");
+        // console.log(`following: ${following}`);
+        // console.log("----------");
+        // console.log(`formattedDate: ${formattedDate}`);
+        // console.log("----------");
 
         // recent posts
         let recentPosts = await getRecentPosts(date);

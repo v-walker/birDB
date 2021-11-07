@@ -11,7 +11,6 @@ function getUsername(post, id) {
             let post = await db.posts.findByPk(id);
             let userID = post.userID;
             let result = await db.users.findByPk(userID);
-            console.log(`Full result: ${result.dataValues.username}`);
             res(result.dataValues.username)
         }
         catch(err){
