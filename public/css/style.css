@@ -75,7 +75,7 @@ width:100%;
 }
 .panel::-webkit-scrollbar {
     width: 8px;
-    background-color: whitesmoke;
+    background-color: white;
     border-radius: 5px;
 }
 
@@ -208,7 +208,7 @@ font-size: 200px;
 line-height: 50px;
 margin-top: -70px;
 display: inline-block;
-font-family: 'Courier Prime', monospace;;
+font-family: 'Courier Prime', monospace;
 }
 /*============*/
 .cdf-sub-title h3 {
