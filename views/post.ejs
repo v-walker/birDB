@@ -11,13 +11,13 @@
 				<div class="col-sm-8">
 					<article class="mb80">
 						<div class="single-post" id='<%= post.id %>'>
-							<div class="cdf-image mb40 img-effect-1">
-								<img src="/img/blog/blog-single-image.jpg" alt="">
+							<div class="cdf-image mb40">
+								<img src="<%= post.imgURL %>" alt="">
 								<figcaption></figcaption>
 							</div>
 							<div class="cdf-single-meta ul-li mb15">
 								<ul>
-									<li class="admin" id="<%= post.userID %> "><strong>Written</strong> by <%= postUsername %> </li>
+									<li class="admin" id="<%= post.userID %>"><strong>Written</strong> by <%= postUsername %> </li>
 									<li class="post-time"> <%= date.month %> - <%= date.day %>   </li>
 									<% if (postUsername == username) { %>
 									 <li>

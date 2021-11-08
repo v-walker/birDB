@@ -36,6 +36,7 @@ app.use(require('./routes/404'));
 app.use(require('./routes/login'));
 app.use(require('./routes/registration'));
 app.use(require('./routes/post'));
+app.use(require('./routes/search'));
 // app.use(require('./routes/hunterpost'));
 
 
