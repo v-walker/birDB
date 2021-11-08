@@ -10,6 +10,18 @@ let headers = {"Content-type": "application/json; charset=UTF-8"}
 
 let ul = document.querySelector('.comments-list')
 
+const resetComment = (id) => {
+    let ds = `default-state-${id}`
+    let defaultState = document.getElementById(ds);
+    defaultState.className = ''
+
+    let es = `edit-state-${id}`
+    let editState = document.getElementById(es);
+    editState.className = 'invisible'
+}
+
+
+
 ul.addEventListener('click', async (e) => {
     e.preventDefault()
     if(e.target.className === 'fas fa-trash'){
@@ -19,6 +31,33 @@ ul.addEventListener('click', async (e) => {
             method: "DELETE",
             headers
         }).then(window.location.assign(`/post/${postID}`))
+    }
+    if(e.target.className === 'fas fa-pencil-alt'){
+        let id = e.target.id;
+        console.log('comment edit');
+        let ds = `default-state-${id}`
+        let defaultState = document.getElementById(ds)
+
+        let es = `edit-state-${id}`
+        let editState = document.getElementById(es)
+
+        defaultState.className = "invisible"
+        editState.className = ""
+    }
+    if(e.target.textContent == "Edit"){
+        let id = e.target.id
+        let editField = `update-${id}`
+        let editDomElement = document.getElementById(editField)
+        fetch(`/post/${postID}/${id}`, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify({updatedContents: editDomElement.value})
+        }).then(window.location.assign(`/post/${postID}`))
+    }
+    if(e.target.textContent == "Cancel"){
+        let id = e.target.id;
+        console.log(id);
+        resetComment(id)
     }
 })
 
