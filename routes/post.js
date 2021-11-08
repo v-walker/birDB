@@ -133,11 +133,10 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
 // editing comment
 router.put('/post/:postID/:commentID', gatekeeper, async (req, res) => {
     try {
-        // let record = await db.users.findByPk(req.user.id);
+        let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID
         let commentID = req.params.commentID;
         let updatedContents = req.body.updatedContents;
-        console.log(updatedContents);
 
         await db.comments.update({contents: updatedContents}, {where: {id: commentID}});
 
@@ -160,7 +159,7 @@ router.put('/post/:postID/:commentID', gatekeeper, async (req, res) => {
             dates: dates,
             usernames: usernames
         });
-    } catch(err) {
+    } catch (err){
         console.log(err);
         res.render("post", {
             error: err
