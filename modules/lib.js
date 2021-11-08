@@ -22,9 +22,9 @@ function getUsername(post, id) {
 function getFollowingUsers(id) {
     return new Promise(async (res, _rej) => {
         try {
-            let result = await db.users.findByPk(id)
-            let userObj = {id: result.id, username: result.username}
-            res(userObj)
+            let result = await db.users.findByPk(id);
+            let userObj = {id: result.id, username: result.username};
+            res(userObj);
         } catch(err) {
             console.log(err);
         }
