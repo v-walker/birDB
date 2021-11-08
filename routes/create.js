@@ -21,12 +21,11 @@ router.get("/create", gatekeeper, async (req, res) => {
     {
         username: record.username,
         userID: record.id
-        
     }
     )
 })
 
-router.post('/create', async (req, res, next) => {
+router.post('/create', gatekeeper, async (req, res, next) => {
     let userID = req.user.id
     const form = new formidable.IncomingForm();
     let uploadFolder = path.join(__dirname, "../public", "files")
