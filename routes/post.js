@@ -41,7 +41,7 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
 });
 
 // edit selected post
-router.put('/post/:postID', async (req, res) => {
+router.put('/post/:postID',gatekeeper, async (req, res) => {
     try {
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
@@ -78,7 +78,7 @@ router.put('/post/:postID', async (req, res) => {
 });
 
 // delete selected post
-router.delete('/post/:postID', async (req, res) => {
+router.delete('/post/:postID',gatekeeper, async (req, res) => {
     try {
         let postID = req.params.postID;
 
@@ -131,7 +131,7 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
 });
 
 // editing comment
-router.put('/post/:postID/:commentID', async (req, res) => {
+router.put('/post/:postID/:commentID',gatekeeper, async (req, res) => {
     try {
         // let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID
