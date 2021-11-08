@@ -59,6 +59,7 @@
 								<ul class="comments-list">
 									<% for( let i = 0; i < comments.length; i++ ) { %>
 										<li class="parent">
+											
 											<div class="comments-img">
 												<img class="img-responsive" src="/img/blog/author.jpg" alt="Post Iamge">
 											</div>
@@ -67,9 +68,9 @@
 													<a href="#" class=""><%= comments[i].username %>  </a> 
 													<span> <%= commentDates[i].month %> - <%= commentDates[i].day %>   </span>
 												</div>
+												<div  id="default-state-<%= comments[i].id %>" >
 												<p id='<%= comments[i].id %>' class="comments-contents"><%= comments[i].contents %> </p>
 												<% if (username == comments[i].username) { %>
-													<div  class="col-2 text-right pr-2">
 														<form action="/post/<%= post.id %>/<%= comments[i].id %>" method="delete" id="comment-delete" name="comment-delete">
 															<button class="button btn" type='submit'>
 																<span>
@@ -83,6 +84,22 @@
 															</span>
 														</button>
 													</div>
+												<div id="edit-state-<%= comments[i].id %>" class="invisible">
+													<div class="col-10">
+														<div id="editContainer" class="input-group">
+																<textarea name="update" id="update-<%= comments[i].id %>" 
+																class="form-control" 
+																aria-label="With textarea"
+																placeholder="Edit a todo item..."><%= comments[i].contents %></textarea>
+																<div class="input-group-append">
+																	<button class="btn btn-outline-info h-100" type="submit" id="<%= comments[i].id %>">Edit</button>
+																</div>
+																<div class="input-group-append">
+																	<button class="btn btn-outline-danger h-100" type="button" id="<%= comments[i].id %>">Cancel</button>
+																</div>
+														</div>
+													</div> 
+											</div>
 												<% } else { %>
 													<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
 												<% } %>
