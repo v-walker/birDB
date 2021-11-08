@@ -7,7 +7,7 @@ router.get('/about', gatekeeper, async (req,res) => {
     let record = await db.users.findByPk(req.user.id)
     res.render('about',
     {
-        username: record.username
+        username: record.username,
     })
 })
 module.exports = router;
