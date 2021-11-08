@@ -20,7 +20,6 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
 
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
-
         res.render("post", {
             username: record.username,
             userID: record.id,
@@ -42,7 +41,7 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
 });
 
 // edit selected post
-router.put('/post/:postID', async (req, res) => {
+router.put('/post/:postID',gatekeeper, async (req, res) => {
     try {
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
@@ -79,7 +78,7 @@ router.put('/post/:postID', async (req, res) => {
 });
 
 // delete selected post
-router.delete('/post/:postID', async (req, res) => {
+router.delete('/post/:postID',gatekeeper, async (req, res) => {
     try {
         let postID = req.params.postID;
 
@@ -102,7 +101,7 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
         let {contents} = req.body;
         
         // allow to post new comment to db (associated with a post)
-        await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
+        await db.comments.create({postID: postID, username: record.username, contents: contents, likes: '0'});
         
         // for individual post
         let {post, postUsername, comments, following, formattedDate, commentDates} = await getIndividualPostData(record, postID);
@@ -110,7 +109,6 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
 
-        // res.json(allComments)
         res.render("post", {
             username: record.username,
             userID: record.id,
@@ -133,7 +131,7 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
 });
 
 // editing comment
-router.put('/post/:postID/:commentID', async (req, res) => {
+router.put('/post/:postID/:commentID',gatekeeper, async (req, res) => {
     try {
         // let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID
