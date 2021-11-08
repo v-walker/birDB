@@ -15,15 +15,14 @@
 				<div class="col-sm-4">
 					<div class="side-bar">
 						<div class="search side-bar-widget">
-							<form action="#" method="get" class="side-bar-search newsletter">
-								<input type="text" class="" placeholder="Search">
+							<form action="/search/:search" method="get" class="side-bar-search newsletter" id="searchForm">
+								<input type="text" class="searchInput" placeholder="Search">
 								<button type="submit"><i class="icon_search"></i></button>
 							</form>
 						</div>
 						<!-- search -->
 						<%- include ('partials/followingSkeleton.ejs') %>
 						<%- include ('partials/recentSkeleton.ejs') %>
-						 
 						<!-- search -->
 					</div>
 				</div>
