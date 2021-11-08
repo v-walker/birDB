@@ -38,6 +38,7 @@ router.get('/', gatekeeper, async (req, res) => {
     
     res.render('index', {
         username: record.username,
+        userID: record.id,
         following: following,
         recentPosts: recentPosts,
         dates: dates,
@@ -67,6 +68,7 @@ router.get('/user/:userPostsID', gatekeeper, async (req, res) => {
     
     res.render('index', {
         username: record.username,
+        userID: record.id,
         following: following,
         recentPosts: recentPosts,
         dates: dates,

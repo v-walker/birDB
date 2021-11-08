@@ -28,6 +28,7 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
+            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,
@@ -63,6 +64,7 @@ router.put('/post/:postID', async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
+            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,
@@ -93,11 +95,11 @@ router.delete('/post/:postID', async (req, res) => {
 });
 
 // add a comment to selected post
-router.post('/post/:postID', async (req, res) => {
+router.post('/post/:postID/', gatekeeper, async (req, res) => {
     try {
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
-        let {username, contents} = req.body;
+        let {contents} = req.body;
         
         // allow to post new comment to db (associated with a post)
         await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
@@ -108,6 +110,7 @@ router.post('/post/:postID', async (req, res) => {
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
 
+        // res.json(allComments)
         res.render("post", {
             username: record.username,
             userID: record.id,
@@ -115,6 +118,7 @@ router.post('/post/:postID', async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
+            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,
@@ -151,6 +155,7 @@ router.put('/post/:postID/:commentID', async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
+            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,
@@ -165,9 +170,9 @@ router.put('/post/:postID/:commentID', async (req, res) => {
 });
 
 // deleting a comment
-router.delete('/post/:postID/:commentID', async (req, res) => {
+router.delete('/post/:postID/:commentID', gatekeeper, async (req, res) => {
     try {
-        // let record = await db.users.findByPk(req.user.id);
+        let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
         let commentID = req.params.commentID;
 
@@ -186,6 +191,7 @@ router.delete('/post/:postID/:commentID', async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
+            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,

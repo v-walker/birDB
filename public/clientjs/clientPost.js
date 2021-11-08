@@ -1,4 +1,52 @@
+let commentForm = document.querySelector('#comment-form');
+let post = document.querySelector('.single-post');
+let postID = post.id
+let posterIDClass = document.querySelector('.admin')
+let posterID = posterIDClass.id
 
+
+let input = document.querySelector('#contents')
+let headers = {"Content-type": "application/json; charset=UTF-8"}
+
+let ul = document.querySelector('.comments-list')
+
+ul.addEventListener('click', async (e) => {
+    e.preventDefault()
+    if(e.target.className === 'fas fa-trash'){
+        let id = e.target.id;
+        console.log('comment fetch');
+        fetch(`/post/${postID}/${id}`, {
+            method: "DELETE",
+            headers
+        }).then(window.location.assign(`/post/${postID}`))
+        //dont know why this one wont redirect
+    }
+})
+
+post.addEventListener('click', async (e) => {
+    e.preventDefault()
+    console.log(e.target);
+    if(e.target.className === 'fas fa-trash'){
+        let id = e.target.id;
+        fetch(`/post/${postID}`, {
+            method: "DELETE",
+            headers
+        }).then(window.location.assign('/'))
+    }
+    if(e.target.className === 'fas fa-pencil-alt add-follow'){
+        let id = e.target.id;
+        fetch(`/user/${posterID}`, {
+            method: "put",
+            headers
+        }).then(window.location.assign(`/user/${posterID}`))
+    }
+})
+
+
+// commentForm.addEventListener('submit',  (e) => {
+//     e.preventDefault()
+//     input.innerHTML = ''
+// })
 
 
 
