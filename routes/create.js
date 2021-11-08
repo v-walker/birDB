@@ -36,7 +36,7 @@ router.post('/create', async (req, res, next) => {
         }
         // await db.posts.create({title: fields.title, commonName: fields.common, scientificName: fields.scientific, location: fields.location, precipitation: fields.precip, temperature: fields.temp, cloudCover: fields.cloud, observation: fields.observation, likes: "0", userID: userID, imgURL: "www.bird.com"})
         cloudinary.uploader.upload(files.upload.filepath, async result => {
-            console.log("this is the result", result)
+            // console.log("this is the result", result)
             await db.posts.create({title: fields.title, commonName: fields.common, scientificName: fields.scientific, location: fields.location, precipitation: fields.precip, temperature: fields.temp, cloudCover: fields.cloud, observation: fields.observation, likes: "0", userID: userID, imgURL: result.secure_url})
             // await db.posts.update({imgURL: result.secure_url}, {where: {imgURL: "www.bird.com"}});
         })

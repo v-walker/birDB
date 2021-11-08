@@ -8,13 +8,18 @@ const Op = Sequelize.Op;
 function getUsername(post, id) {
     return new Promise(async (res, _rej) => {
         try{
-            let result = await db.posts.findByPk(id, {
-                include: [{
-                    model: db.users,
-                    required: true
-                }]})
-                console.log(result);
-            res(result.dataValues.user.dataValues.username)
+            let post = await db.posts.findByPk(id);
+            let userID = post.userID;
+            let result = await db.users.findByPk(userID);
+            console.log(`Full result: ${result.dataValues.username}`);
+            res(result.dataValues.username)
+            // let result = await db.posts.findByPk(id, {
+            //     include: [{
+            //         model: db.users,
+            //         required: true
+            //     }]})
+            //     console.log(result);
+            // res(result.dataValues.user.dataValues.username)
         }
         catch(err){
             console.log(err);
@@ -34,30 +39,31 @@ function getFollowingUsers(id) {
     })
 };
 
-function userOrFollow(post, option){
-    return new Promise(async (res, _rej) => {
-        try {
-            if(option == "username"){
-                console.log('if');
-                const id = post.userID
-                res(id)
-            } 
-            else{
-                console.log('else');
-                const id = post.id
-                res(id)
-            }
-        } catch(err) {
-            console.log(err);
-        }
-    })
-}
+// function userOrFollow(post, option){
+//     return new Promise(async (res, _rej) => {
+//         try {
+//             if(option == "username"){
+//                 console.log('if');
+//                 const id = post.userID
+//                 res(id)
+//             } 
+//             else{
+//                 console.log('else');
+//                 const id = post.id
+//                 res(id)
+//             }
+//         } catch(err) {
+//             console.log(err);
+//         }
+//     })
+// }
 
-async function arrayIterator(arr, action, option) {
+async function arrayIterator(arr, action) {
     manipulatedArray = [];
     for (let i = 0; i < arr.length; i++) {
         const post = arr[i];
-        const id = await userOrFollow(post, option)
+        // const id = await userOrFollow(post, option)
+        const id = post.id;
         const result = await action(post, id);
         manipulatedArray.push(result);
     }
@@ -79,9 +85,9 @@ router.get('/', gatekeeper, async (req,res) => {
         }
     });
 
-    let usernames = await arrayIterator(recentPosts, getUsername, "username");
+    let usernames = await arrayIterator(recentPosts, getUsername);
     let followingIDList = (record.following !== null)? record.following.split(','): [];
-    let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
     
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
     recentPosts.forEach(post => {
@@ -94,15 +100,15 @@ router.get('/', gatekeeper, async (req,res) => {
     });
 
 
-    console.log(record);
-    console.log("---------");
-    console.log(following);
-    console.log("---------");
-    console.log(recentPosts);
-    console.log("---------");
-    console.log(usernames);
-    console.log("-------");
-    console.log(dates);
+    // console.log(record);
+    // console.log("---------");
+    // console.log(following);
+    // console.log("---------");
+    // console.log(recentPosts);
+    // console.log("---------");
+    // console.log(usernames);
+    // console.log("-------");
+    // console.log(dates);
     
     res.render('index', {
         username: record.username,
@@ -123,9 +129,9 @@ router.get('/user/:userPostsID', gatekeeper, async (req,res) => {
     
     let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
 
-    let usernames = await arrayIterator(recentPosts, getUsername, "username");
+    let usernames = await arrayIterator(recentPosts, getUsername);
     let followingIDList = (record.following !== null)? record.following.split(','): [];
-    let following = await arrayIterator(followingIDList, getFollowingUsers, "following");
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
     
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
     recentPosts.forEach(post => {
