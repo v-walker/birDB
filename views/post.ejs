@@ -71,32 +71,34 @@
 												<div  id="default-state-<%= comments[i].id %>" >
 												<p id='<%= comments[i].id %>' class="comments-contents"><%= comments[i].contents %> </p>
 												<% if (username == comments[i].username) { %>
-														<form action="/post/<%= post.id %>/<%= comments[i].id %>" method="delete" id="comment-delete" name="comment-delete">
 															<button class="button btn" type='submit'>
 																<span>
 																	<i id='<%= comments[i].id %>' class="fas fa-trash"></i>
 																</span>
 															</button>
-														</form>
 														<button  class="button btn">
 															<span>
 																<i id='<%= comments[i].id %>' class="fas fa-pencil-alt"></i>
 															</span>
 														</button>
 													</div>
+												
 												<div id="edit-state-<%= comments[i].id %>" class="invisible">
-													<div class="col-10">
+													<div class="col-4">
 														<div id="editContainer" class="input-group">
 																<textarea name="update" id="update-<%= comments[i].id %>" 
 																class="form-control" 
 																aria-label="With textarea"
 																placeholder="Edit a todo item..."><%= comments[i].contents %></textarea>
-																<div class="input-group-append">
+																<div>
+																<span class="input-group-append">
 																	<button class="btn btn-outline-info h-100" type="submit" id="<%= comments[i].id %>">Edit</button>
-																</div>
-																<div class="input-group-append">
+																</span>
+																<span class="input-group-append">
 																	<button class="btn btn-outline-danger h-100" type="button" id="<%= comments[i].id %>">Cancel</button>
+																</span>
 																</div>
+																
 														</div>
 													</div> 
 											</div>
