@@ -7,11 +7,16 @@
 </head>
 <body>
 	<%- include ('partials/header.ejs') %>
-	<div class="breadcrumb-overlay bg-green">
+    <div class="breadcrumb-overlay">
         <div class="container">
             <div class="row">
                 <div class="cdf-breadcrumb ul-li text-center">
-                    <div class="font" style="color: white; font-size: 65px;" >Log A Bird</div>
+                    <div class="section-title">
+                        <span>let's build the DB!</span>
+                        <h2>log a bird</h2>
+                        <strong>birDB</strong>
+                    </div>
+                    <!-- <div class="font" style="color: white; font-size: 65px;" >Tweetr</div> -->
                 </div>
             </div>
         </div>
@@ -29,11 +34,11 @@
 					<input type="text" name="precip" placeholder="Precipitation"><br>
 					<input type="text" name="temp" placeholder="Temperature"><br>
 					<input type="text" name="cloud" placeholder="Cloud Cover"><br>
-					<input type="text" name="observation" placeholder="Notes"><br>
+					<input type="" name="observation" placeholder="Notes"><br>
 					<br>
-					<input class="chooseBtn" style="text-align-last: center; margin: auto" type="file" name="upload" multiple="multiple">
+					<input style="text-align-last: center; margin: auto" type="file" name="upload" multiple="multiple">
 					<br>
-					<input class="submitBtn" type="submit" value="Log That Bird!">
+					<input class="btn btn-outline-light button-height" type="submit" value="Log That Bird!">
 					<br>
 					<br>
 					<br>
