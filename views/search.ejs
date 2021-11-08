@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<%- include ('partials/meta.ejs') %> 
+</head>
+<body>
+	<%- include ('partials/header.ejs') %>
+
+	<div class="blog-section pt70 pb70">
+		<div class="container">
+			<div class="row">
+                <!-- posts -->
+				<div class="col-sm-8" id="append-posts">
+					<!-- <%- include ('partials/blogSkeleton.ejs') %> -->
+				</div>
+                <!-- users -->
+                <div class="col-sm-8" id="append-users">
+                    <!-- user query data here -->
+                </div>
+				<div class="col-sm-4">
+					<div class="side-bar">
+						<div class="search side-bar-widget">
+							<form action="#" method="get" class="side-bar-search newsletter">
+								<input type="text" class="" placeholder="Search">
+								<button type="submit"><i class="icon_search"></i></button>
+							</form>
+						</div>
+						<!-- search -->
+						<%- include ('partials/followingSkeleton.ejs') %>
+						<%- include ('partials/recentSkeleton.ejs') %>
+					
+						<!-- search -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%- include ('partials/footer.ejs') %>
+
+	<%- include ('partials/scripts.ejs') %>
+
+	<!-- <script src="/clientjs/clientIndex.js"></script> -->
+	<script src="/js/searchClient.js"></script>
+
+</body>	
+</html>

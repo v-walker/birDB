@@ -4,14 +4,15 @@ const gatekeeper =  require("../auth");
 const db = require("../models");
 const Sequelize = require("sequelize")
 const Op = Sequelize.Op;
-const {monthNames, getUsername, getFollowingUsers, arrayIterator} = require("../modules/lib")
+const {monthNames, getUsername, getFollowingUsers, arrayIterator} = require("../modules/lib");
 
-router.get('/', gatekeeper, async (req,res) => {
+let date = new Date();
+// three days back
+date.setDate(date.getDate() - 3);
+
+router.get('/', gatekeeper, async (req, res) => {
     let record = await db.users.findByPk(req.user.id);
     let dates = [];
-    let date = new Date();
-    
-    date.setDate(date.getDate() - 3);
     
     let recentPosts = await db.posts.findAll({
         where: {
@@ -44,13 +45,10 @@ router.get('/', gatekeeper, async (req,res) => {
     });
 });
 
-router.get('/user/:userPostsID', gatekeeper, async (req,res) => {
+router.get('/user/:userPostsID', gatekeeper, async (req, res) => {
     let userPostsID = req.params.userPostsID
     let record = await db.users.findByPk(req.user.id);
     let dates = [];
-    let date = new Date();
-    
-    date.setDate(date.getDate() - 3);
     
     let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
 
