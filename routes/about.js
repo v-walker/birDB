@@ -8,6 +8,7 @@ router.get('/about', gatekeeper, async (req,res) => {
     res.render('about',
     {
         username: record.username,
+        userID: record.id
     })
 })
 module.exports = router;

@@ -9,7 +9,8 @@ let record = await db.users.findByPk(req.user.id)
 
     res.render('chat',
     {
-        username: record.username
+        username: record.username,
+        userID: record.id
     })
 
     req.session.record = record

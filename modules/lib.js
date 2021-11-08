@@ -80,7 +80,8 @@ const getIndividualPostData = (record, postID) => {
             let following = await arrayIterator(followingIDList, getFollowingUsers);
             let rawDate = post.dataValues.createdAt;
             let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-            res({post: post, postUsername: postUsername, comments: comments, following: following, formattedDate: formattedDate});
+            let commentDates = await getDates(comments);
+            res({post: post, postUsername: postUsername, comments: comments, following: following, formattedDate: formattedDate, commentDates: commentDates});
         } catch (err) {
             console.log(err);
         }

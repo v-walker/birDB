@@ -16,7 +16,7 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let postID = req.params.postID;
 
         // for individual post
-        let {post, postUsername, comments, following, formattedDate} = await getIndividualPostData(record, postID);
+        let {post, postUsername, comments, following, formattedDate, commentDates} = await getIndividualPostData(record, postID);
 
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
@@ -52,7 +52,7 @@ router.put('/post/:postID', async (req, res) => {
         await db.posts.update({title: title, observation: observation, imgURL: imgURL}, {where: {id: postID}});
 
         // for individual post
-        let {post, postUsername, comments, following, formattedDate} = await getIndividualPostData(record, postID);
+        let {post, postUsername, comments, following, formattedDate, commentDates} = await getIndividualPostData(record, postID);
 
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
@@ -105,7 +105,7 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
         await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
         
         // for individual post
-        let {post, postUsername, comments, following, formattedDate} = await getIndividualPostData(record, postID);
+        let {post, postUsername, comments, following, formattedDate, commentDates} = await getIndividualPostData(record, postID);
 
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
@@ -143,7 +143,7 @@ router.put('/post/:postID/:commentID', async (req, res) => {
         await db.comments.update({contents: updatedContents}, {where: {id: commentID}});
 
         // for individual post
-        let {post, postUsername, comments, following, formattedDate} = await getIndividualPostData(record, postID);
+        let {post, postUsername, comments, following, formattedDate, commentDates} = await getIndividualPostData(record, postID);
 
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
@@ -179,8 +179,8 @@ router.delete('/post/:postID/:commentID', gatekeeper, async (req, res) => {
         await db.comments.destroy({where: {id: commentID}});
 
         // for individual post
-        let {post, postUsername, comments, following, formattedDate} = await getIndividualPostData(record, postID);
-
+        let {post, postUsername, comments, following, formattedDate, commentDates} = await getIndividualPostData(record, postID);
+        
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
 
