@@ -20,13 +20,13 @@
 									<li class="admin" id="<%= post.userID %>"><strong>Written</strong> by <%= postUsername %> </li>
 									<li class="post-time"> <%= date.month %> - <%= date.day %>   </li>
 									<% if (postUsername == username) { %>
-									 <li>
+									<li>
 											<button class="button btn" type='submit'>
 												<span>
 													<i id='<%= post.id %>' class="fas fa-trash"></i>
 												</span>
 											</button>
-									 </li>
+									</li>
 									<% } else { %>
 										<li>
 											<button class="button btn" type='submit'>
@@ -34,7 +34,7 @@
 													<i id='<%= post.id %>' class="fas fa-pencil-alt add-follow"></i>
 												</span>
 											</button>
-									 </li>
+									</li>
 									<% } %> 
 								</ul>
 							</div>
@@ -111,12 +111,12 @@
 					</div>
 					<div class="col-sm-4">
 						<div class="side-bar">
-							<div class="search side-bar-widget">
+							<!-- <div class="search side-bar-widget">
 								<form action="#" method="get" class="side-bar-search newsletter">
 									<input type="text" class="" placeholder="Search">
 									<button type="submit"><i class="icon_search"></i></button>
 								</form>
-							</div>
+							</div> -->
 							<%- include ('partials/followingSkeleton.ejs') %>
 							<%- include ('partials/recentSkeleton.ejs') %>
 						</div>
