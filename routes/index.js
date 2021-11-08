@@ -11,7 +11,7 @@ function getUsername(post, id) {
             let post = await db.posts.findByPk(id);
             let userID = post.userID;
             let result = await db.users.findByPk(userID);
-            console.log(`Full result: ${result.dataValues.username}`);
+            // console.log(`Full result: ${result.dataValues.username}`);
             res(result.dataValues.username)
             // let result = await db.posts.findByPk(id, {
             //     include: [{
@@ -112,6 +112,7 @@ router.get('/', gatekeeper, async (req,res) => {
     
     res.render('index', {
         username: record.username,
+        userID: record.id,
         following: following,
         recentPosts: recentPosts,
         dates: dates,
@@ -144,18 +145,75 @@ router.get('/user/:userPostsID', gatekeeper, async (req,res) => {
     });
 
 
-    console.log(record);
-    console.log("---------");
-    console.log(following);
-    console.log("---------");
-    console.log(recentPosts);
-    console.log("---------");
-    console.log(usernames);
-    console.log("-------");
-    console.log(dates);
+    // console.log(record);
+    // console.log("---------");
+    // console.log(following);
+    // console.log("---------");
+    // console.log(recentPosts);
+    // console.log("---------");
+    // console.log(usernames);
+    // console.log("-------");
+    // console.log(dates);
     
     res.render('index', {
         username: record.username,
+        userID: record.id,
+        following: following,
+        recentPosts: recentPosts,
+        dates: dates,
+        usernames: usernames
+    });
+});
+
+//add follow
+router.put('/user/:userPostsID', gatekeeper, async (req,res) => {
+    let userPostsID = req.params.userPostsID
+    let record = await db.users.findByPk(req.user.id);
+    let userID = record.id
+    let dates = [];
+    let date = new Date();
+    let unsplitFollowing = record.following
+    unsplitFollowing += `,${userPostsID}`
+    date.setDate(date.getDate() - 3);
+    
+    
+    let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
+    
+    let usernames = await arrayIterator(recentPosts, getUsername);
+    let followingIDList = (record.following !== null)? record.following.split(','): [];
+    // if (followingIDList.includes(userPostsID) !== true){
+    //     let unsplitFollowing = record.following
+    //     unsplitFollowing += `,${userPostsID}`
+    // }
+    let following = await arrayIterator(followingIDList, getFollowingUsers);
+
+    await db.users.update({following: unsplitFollowing}, {where: {id: userID}});
+
+    
+    const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
+    recentPosts.forEach(post => {
+        let rawDate = post.dataValues.createdAt
+        let formattedDate = {
+            "month": monthNames[rawDate.getMonth()], 
+            "day": rawDate.getDate()
+        }
+        dates.push(formattedDate);
+    });
+
+
+    // console.log(record);
+    // console.log("---------");
+    // console.log(following);
+    // console.log("---------");
+    // console.log(recentPosts);
+    // console.log("---------");
+    // console.log(usernames);
+    // console.log("-------");
+    // console.log(dates);
+    
+    res.render('index', {
+        username: record.username,
+        userID: record.id,
         following: following,
         recentPosts: recentPosts,
         dates: dates,

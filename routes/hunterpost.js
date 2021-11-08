@@ -98,13 +98,18 @@ async function arrayIterator(arr, action) {
 };
 
 // don't need this anymore? yes
-// router.get('/post', gatekeeper,(req, res) => {
-//     res.render("post");
-// });
+router.get('/post/', gatekeeper,(req, res) => {
+    console.log('first');
+    let postID = req.params.postID;
+    res.render("hunterPost", {
+        postID: postID
+    });
+});
 
 // GET /post/:postID
 router.get("/post/:postID", gatekeeper,async (req, res) => {
     try {
+        console.log('second');
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
 
@@ -125,8 +130,8 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
         let recentPosts = await getRecentPosts(date);
         let dates = getDates(recentPosts);
         let usernames = await arrayIterator(recentPosts, getUsername);
-
-        res.render("post", {
+        let object =  {
+            postID: postID,
             username: record.username,
             userID: record.id,
             following: following,
@@ -139,49 +144,8 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
             dates: dates,
             usernames: usernames
 
-        });
-    } catch {
-        console.log('Error getting post');
-        res.redirect('/');
-    }
-});
-
-router.get("/post/:postID/:commentID", gatekeeper, async (req, res) => {
-    try {
-        let record = await db.users.findByPk(req.user.id);
-        let postID = req.params.postID;
-
-        // for individual post
-        let post = await db.posts.findByPk(postID);
-        let postUserID = post.dataValues.userID;
-        let postUser = await db.users.findByPk(postUserID);
-        let postUsername = postUser.username;
-        let comments = await db.comments.findAll({where: {postID: postID}});
-        let followingIDList = (record.following !== null)? record.following.split(','): [];
-        let following = await arrayIterator(followingIDList, getFollowingUsers);
-        let rawDate = post.dataValues.createdAt;
-        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-        let commentDates = getDates(comments)
-
-
-        // recent posts
-        let recentPosts = await getRecentPosts(date);
-        let dates = getDates(recentPosts);
-        let usernames = await arrayIterator(recentPosts, getUsername);
-        res.render("post", {
-            username: record.username,
-            userID: record.id,
-            following: following,
-            post: post,
-            postUsername: postUsername,
-            comments: comments,
-            commentDates: commentDates,
-            date: formattedDate,
-            recentPosts: recentPosts,
-            dates: dates,
-            usernames: usernames
-
-        });
+        };
+        res.json(object)
     } catch {
         console.log('Error getting post');
         res.redirect('/');
@@ -208,7 +172,6 @@ router.put('/post/:postID', async (req, res) => {
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
         let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-        let commentDates = getDates(comments)
 
         // recent posts
         let recentPosts = await getRecentPosts(date);
@@ -222,7 +185,6 @@ router.put('/post/:postID', async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
-            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,
@@ -253,7 +215,7 @@ router.delete('/post/:postID', async (req, res) => {
 });
 
 // add a comment to selected post
-router.post('/post/:postID/', gatekeeper, async (req, res) => {
+router.post('/post/:postID', gatekeeper, async (req, res) => {
     try {
         let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
@@ -323,7 +285,6 @@ router.put('/post/:postID/:commentID', async (req, res) => {
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
         let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-        let commentDates = getDates(comments)
 
         // recent posts
         let recentPosts = await getRecentPosts(date);
@@ -337,7 +298,6 @@ router.put('/post/:postID/:commentID', async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
-            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,
@@ -352,9 +312,10 @@ router.put('/post/:postID/:commentID', async (req, res) => {
 });
 
 // deleting a comment
-router.delete('/post/:postID/:commentID', gatekeeper, async (req, res) => {
+router.delete('/post/:postID/:commentID', async (req, res) => {
     try {
-        let record = await db.users.findByPk(req.user.id);
+        console.log('in delete');
+        // let record = await db.users.findByPk(req.user.id);
         let postID = req.params.postID;
         let commentID = req.params.commentID;
 
@@ -370,13 +331,13 @@ router.delete('/post/:postID/:commentID', gatekeeper, async (req, res) => {
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         let rawDate = post.dataValues.createdAt;
         let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-        let commentDates = getDates(comments)
 
         // recent posts
         let recentPosts = await getRecentPosts(date);
         let dates = getDates(recentPosts);
         let usernames = await arrayIterator(recentPosts, getUsername);
-        console.log('redirect');
+
+        // res.redirect(`/post/${postID}`)
         res.render("post", {
             username: record.username,
             userID: record.id,
@@ -384,7 +345,6 @@ router.delete('/post/:postID/:commentID', gatekeeper, async (req, res) => {
             post: post,
             postUsername: postUsername,
             comments: comments,
-            commentDates: commentDates,
             date: formattedDate,
             recentPosts: recentPosts,
             dates: dates,

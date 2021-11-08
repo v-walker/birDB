@@ -10,15 +10,32 @@
 			<div class="row">
 				<div class="col-sm-8">
 					<article class="mb80">
-						<div class="single-post" value='<%= post.id %>'>
+						<div class="single-post" id='<%= post.id %>'>
 							<div class="cdf-image mb40 img-effect-1">
 								<img src="/img/blog/blog-single-image.jpg" alt="">
 								<figcaption></figcaption>
 							</div>
 							<div class="cdf-single-meta ul-li mb15">
 								<ul>
-									<li class="admin"><strong>Written</strong> by USERNAME</li>
-									<li class="post-time"> DATE </li>
+									<li class="admin" id="<%= post.userID %> "><strong>Written</strong> by <%= postUsername %> </li>
+									<li class="post-time"> <%= date.month %> - <%= date.day %>   </li>
+									<% if (postUsername == username) { %>
+									 <li>
+											<button class="button btn" type='submit'>
+												<span>
+													<i id='<%= post.id %>' class="fas fa-trash"></i>
+												</span>
+											</button>
+									 </li>
+									<% } else { %>
+										<li>
+											<button class="button btn" type='submit'>
+												<span>
+													<i id='<%= post.id %>' class="fas fa-trash add-follow"></i>
+												</span>
+											</button>
+									 </li>
+									<% } %> 
 								</ul>
 							</div>
 							<div class="cdf-title mb20">
@@ -40,32 +57,49 @@
 							<div class="post-comments-area padding-top80">
 								<h3 class="sub-title padding-bottom50"> Comments [<%= comments.length %>]</h3>
 								<ul class="comments-list">
-									<% comments.forEach(comment => { %>
+									<% for( let i = 0; i < comments.length; i++ ) { %>
 										<li class="parent">
 											<div class="comments-img">
 												<img class="img-responsive" src="/img/blog/author.jpg" alt="Post Iamge">
 											</div>
 											<div class="comments-txt dark-bg content-box">
 												<div class="author mb10">
-													<a href="#" class=""><%= comment.username %>  </a> 
-													<span>DATE</span>
+													<a href="#" class=""><%= comments[i].username %>  </a> 
+													<span> <%= commentDates[i].month %> - <%= commentDates[i].day %>   </span>
 												</div>
-												<p><%= comment.contents %> </p>
-												<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
+												<p id='<%= comments[i].id %>' class="comments-contents"><%= comments[i].contents %> </p>
+												<% if (username == comments[i].username) { %>
+													<div  class="col-2 text-right pr-2">
+														<form action="/post/<%= post.id %>/<%= comments[i].id %>" method="delete" id="comment-delete" name="comment-delete">
+															<button class="button btn" type='submit'>
+																<span>
+																	<i id='<%= comments[i].id %>' class="fas fa-trash"></i>
+																</span>
+															</button>
+														</form>
+														<button  class="button btn">
+															<span>
+																<i id='<%= comments[i].id %>' class="fas fa-pencil-alt"></i>
+															</span>
+														</button>
+													</div>
+												<% } else { %>
+													<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
+												<% } %>
 											</div>
 										</li>
-									<% }) %>
+									<% } %>
 								</ul>
 							</div><!-- /.post-comments-area -->
 							<div id="leave-comment" class="pb80">
 								<div class="cdf-title mb30">
 									<h2>LEAVE A REPLY</h2>
 								</div>
-								<form action="php/contact-form.php" method="post" id="comment-form" name="comment-form">
+								<form action="/post/<%= post.id %>" method="post" id="comment-form" name="comment-form">
 									<div class="contact-form-inner mb80">
 										<div class="row">
 											<div class="contact-form-field col-md-12">
-											<textarea id="comment-form-message" rows="5" placeholder="Type your message...."></textarea>
+											<textarea id="contents" rows="5" placeholder="Type your message...." name="contents" type="contents"></textarea>
 											<div class="cdf-btn cdf-btn-one submit">
 												<button type="submit">SEND MESSAGE</button>
 											</div>
