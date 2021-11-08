@@ -20,7 +20,6 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
 
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
-
         res.render("post", {
             username: record.username,
             userID: record.id,
@@ -102,7 +101,7 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
         let {contents} = req.body;
         
         // allow to post new comment to db (associated with a post)
-        await db.comments.create({postID: postID, username: username, contents: contents, likes: '0'});
+        await db.comments.create({postID: postID, username: record.username, contents: contents, likes: '0'});
         
         // for individual post
         let {post, postUsername, comments, following, formattedDate, commentDates} = await getIndividualPostData(record, postID);
@@ -110,7 +109,6 @@ router.post('/post/:postID/', gatekeeper, async (req, res) => {
         // for recent posts
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
 
-        // res.json(allComments)
         res.render("post", {
             username: record.username,
             userID: record.id,

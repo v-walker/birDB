@@ -19,7 +19,6 @@ ul.addEventListener('click', async (e) => {
             method: "DELETE",
             headers
         }).then(window.location.assign(`/post/${postID}`))
-        //dont know why this one wont redirect
     }
 })
 
