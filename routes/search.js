@@ -24,15 +24,11 @@ router.get("/search", gatekeeper, async(req, res) => {
             userID: record.id,
             // send arrays of both sets of query data back here
             // also send: following, recent posts, dates for recent posts, and usernames for recent posts
-        })
-
+        });
 
     } catch(err) {
         console.log(err);
     };
-
 })
-
-
 
 module.exports = router;

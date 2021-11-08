@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const gatekeeper =  require("../auth");
 const db = require("../models");
-const Sequelize = require("sequelize")
+const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
 const {getIndividualPostData, getRecentPostData} = require("../modules/lib")
 
