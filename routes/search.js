@@ -10,10 +10,10 @@ let date = new Date();
 // three days back
 date.setDate(date.getDate() - 3);
 
-router.get("/search/:searchString", gatekeeper, async(req, res) => {
+router.get("/search", gatekeeper, async(req, res) => {
     try {
         let record = await db.users.findByPk(req.user.id);
-        let searchString = req.params.searchString;
+        let searchString = req.body.searchString;
 
         // query posts table by searchString for: common name, sci name; join results of both into array to be sent to front-end
 
