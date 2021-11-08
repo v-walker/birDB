@@ -1,7 +1,7 @@
 <% for( let i = 0; i < recentPosts.length; i++ ) { %>
     <article class="mb80">
         <div class="cdf-post relative pl70">
-            <div class="cdf-image"><img src="/img/blog/blog-image-5.jpg" alt="">
+            <div class="cdf-image"><img src="<%= recentPosts[i].imgURL %>" width="650px" height="auto" alt="">
                 <div class="cdf-meta">
                     <ul class="post-meta">
                         <li><a href="#"><%= dates[i].day %>  <%= dates[i].month %></a></li>
