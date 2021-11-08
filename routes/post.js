@@ -146,48 +146,6 @@ router.get("/post/:postID", gatekeeper,async (req, res) => {
     }
 });
 
-router.get("/post/:postID/:commentID", gatekeeper, async (req, res) => {
-    try {
-        let record = await db.users.findByPk(req.user.id);
-        let postID = req.params.postID;
-
-        // for individual post
-        let post = await db.posts.findByPk(postID);
-        let postUserID = post.dataValues.userID;
-        let postUser = await db.users.findByPk(postUserID);
-        let postUsername = postUser.username;
-        let comments = await db.comments.findAll({where: {postID: postID}});
-        let followingIDList = (record.following !== null)? record.following.split(','): [];
-        let following = await arrayIterator(followingIDList, getFollowingUsers);
-        let rawDate = post.dataValues.createdAt;
-        let formattedDate = {"month": monthNames[rawDate.getMonth()], "day": rawDate.getDate()};
-        let commentDates = getDates(comments)
-
-
-        // recent posts
-        let recentPosts = await getRecentPosts(date);
-        let dates = getDates(recentPosts);
-        let usernames = await arrayIterator(recentPosts, getUsername);
-        res.render("post", {
-            username: record.username,
-            userID: record.id,
-            following: following,
-            post: post,
-            postUsername: postUsername,
-            comments: comments,
-            commentDates: commentDates,
-            date: formattedDate,
-            recentPosts: recentPosts,
-            dates: dates,
-            usernames: usernames
-
-        });
-    } catch {
-        console.log('Error getting post');
-        res.redirect('/');
-    }
-});
-
 // edit selected post
 router.put('/post/:postID', async (req, res) => {
     try {

@@ -11,6 +11,7 @@ let headers = {"Content-type": "application/json; charset=UTF-8"}
 let ul = document.querySelector('.comments-list')
 
 ul.addEventListener('click', async (e) => {
+    e.preventDefault()
     if(e.target.className === 'fas fa-trash'){
         let id = e.target.id;
         console.log('comment fetch');
@@ -18,10 +19,12 @@ ul.addEventListener('click', async (e) => {
             method: "DELETE",
             headers
         }).then(window.location.assign(`/post/${postID}`))
+        //dont know why this one wont redirect
     }
 })
 
 post.addEventListener('click', async (e) => {
+    e.preventDefault()
     console.log(e.target);
     if(e.target.className === 'fas fa-trash'){
         let id = e.target.id;
@@ -30,7 +33,7 @@ post.addEventListener('click', async (e) => {
             headers
         }).then(window.location.assign('/'))
     }
-    if(e.target.className === 'fas fa-trash add-follow'){
+    if(e.target.className === 'fas fa-pencil-alt add-follow'){
         let id = e.target.id;
         fetch(`/user/${posterID}`, {
             method: "put",
