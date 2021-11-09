@@ -11,7 +11,12 @@
 			<div class="row">
                 <!-- posts -->
 				<div class="col-sm-8" id="append-posts">
-					<h3>Posts Matching Your Search: [<%= postsQuery.length %>]</h3>
+					<article class="mb80">
+						<div class="cdf-post relative pl70">
+							<h3>Posts Matching Your Search: [<%= postsQuery.length %>]</h3>
+						</div>
+					</article>
+					
 					<% for( let i = 0; i < postsQuery.length; i++ ) { %>
 						<article class="mb80">
 							<div class="cdf-post relative pl70">
@@ -28,7 +33,7 @@
 					<% } %>
 				</div>
                 
-				<div class="col-sm-3">
+				<div class="col-sm-4">
 					<div class="side-bar">
 						<div class="search side-bar-widget">
 							<form action="/search" method="GET" class="side-bar-search newsletter" id="searchForm">

@@ -10,29 +10,15 @@ let date = new Date();
 // three days back
 date.setDate(date.getDate() - 3);
 
-// function getUserQuery(search) {
-//     return new Promise(async (res, _rej) => {
-//         try {
-//             let userQuery = await db.users.findAll({where: {username: search}});
-//             let userObj = {id: result.id, username: result.username};
-//             res(userObj);
-//         } catch(err) {
-//             console.log(err);
-//         }
-//     })
-// };
-
 router.get("/search", gatekeeper, async(req, res) => {
     // try {
         let record = await db.users.findByPk(req.user.id);
-
         let search = req.query.search;
         console.log(search);
 
         let postsQuery = [];
         // query posts table by searchString for: common name, sci name; join results of both into array to be sent to front-end
         let commonQuery = await db.posts.findAll({where: {commonName: search}});
-        // console.log(commonQuery);
         if (commonQuery.length >= 1) {
             commonQuery.forEach(post => {
                 postsQuery.push(post.dataValues)
@@ -68,19 +54,20 @@ router.get("/search", gatekeeper, async(req, res) => {
         });
 
         res.render("search", {
+            // send arrays of both sets of query data back here
+            // also send: following, recent posts, dates for recent posts, and usernames for recent posts
             username: record.username,
             userID: record.id,
             postsQuery: postsQuery,
-            // postsQueryDates: postsQueryDates,
             postsQueryUsernames: postsQueryUsernames,
-            // userQueryData: userQueryData,
             following: following,
             recentPosts: recentPosts,
             dates: dates,
             usernames: usernames
 
-            // send arrays of both sets of query data back here
-            // also send: following, recent posts, dates for recent posts, and usernames for recent posts
+            // keep working on getting this data to work properly...
+            // postsQueryDates: postsQueryDates,
+            // userQueryData: userQueryData
         });
 
     // } catch(err) {
