@@ -3430,3 +3430,7 @@ overflow: hidden !important;
 .invisible{
 	height: 0px;
 }
+
+.fas:hover {
+	color: #027373;
+}

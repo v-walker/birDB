@@ -85,29 +85,31 @@ router.put('/user/:userPostsID', gatekeeper, async (req,res) => {
     let dates = [];
     let date = new Date();
     let unsplitFollowing = record.following
-    if (record.following){
-        unsplitFollowing += `,${userPostsID}`
-        console.log('not null', unsplitFollowing);
-    } else {
-        unsplitFollowing = userPostsID
-        console.log('null', unsplitFollowing);
+    let followingIDList = unsplitFollowing.split(',');
+    if(!followingIDList.includes(userPostsID)){
+        if (record.following){
+            unsplitFollowing += `,${userPostsID}`
+        } else {
+            unsplitFollowing = userPostsID
+        }
+        await db.users.update({following: unsplitFollowing}, {where: {id: userID}});
     }
+
     date.setDate(date.getDate() - 3);
-    
-    await db.users.update({following: unsplitFollowing}, {where: {id: userID}});
     
     let updatedRecord = await db.users.findByPk(req.user.id);
 
     let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
-    
+    let updatedFollowing = updatedRecord.following
+    let updatedFollowingList = updatedFollowing.split(',')
+    console.log(updatedFollowingList);
     let usernames = await arrayIterator(recentPosts, getUsername);
-    let followingIDList = updatedRecord.following.split(',');
     // if (followingIDList.includes(userPostsID) !== true){
         //     let unsplitFollowing = record.following
         //     unsplitFollowing += `,${userPostsID}`
         // }
-    let following = await arrayIterator(followingIDList, getFollowingUsers);
-        
+    let following = await arrayIterator(updatedFollowingList, getFollowingUsers);
+    console.log(following);
         
     const monthNames = ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEPT", "OCT", "NOV", "DEC"];
     recentPosts.forEach(post => {
@@ -122,7 +124,7 @@ router.put('/user/:userPostsID', gatekeeper, async (req,res) => {
     res.render('index', {
         username: record.username,
         userID: record.id,
-        following: following,
+        following: updatedFollowingList,
         recentPosts: recentPosts,
         dates: dates,
         usernames: usernames
