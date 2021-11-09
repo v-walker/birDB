@@ -24,17 +24,17 @@
 		<div class="row text-center">
 			<div class="col-12">
 				<form action="/create" enctype="multipart/form-data" method="POST">
-					<input type="text" class="form-control form-font" name="title" placeholder="Post Title"><br>
-					<input type="text" class="form-control form-font" name="common" placeholder="Common Name"><br>
-					<input type="text" class="form-control form-font" name="scientific" placeholder="Scientific Name"><br>
-					<input type="text" class="form-control form-font" name="location" placeholder="Location"><br>
-					<input type="text" class="form-control form-font" name="precip" placeholder="Precipitation"><br>
-					<input type="text" class="form-control form-font" name="temp" placeholder="Temperature"><br>
-					<input type="text" class="form-control form-font" name="cloud" placeholder="Cloud Cover"><br>
-					<textarea type="text" class="form-control form-font" name="observation" placeholder="Observations" rows="4"></textarea>
+					<input type="text" class="form-control form-font" name="title" placeholder="Post Title" required><br>
+					<input type="text" class="form-control form-font" name="common" placeholder="Common Name" required><br>
+					<input type="text" class="form-control form-font" name="scientific" placeholder="Scientific Name" required><br>
+					<input type="text" class="form-control form-font" name="location" placeholder="Location" required><br>
+					<input type="text" class="form-control form-font" name="precip" placeholder="Precipitation" required><br>
+					<input type="text" class="form-control form-font" name="temp" placeholder="Temperature" required><br>
+					<input type="text" class="form-control form-font" name="cloud" placeholder="Cloud Cover" required><br>
+					<textarea type="text" class="form-control form-font" name="observation" placeholder="Observations" rows="4" required></textarea>
 					<br>
 					<label for="file-upload" class="custom-file-upload">Upload A Photo</label>
-					<input id="file-upload" type="file" name="upload" multiple="multiple">
+					<input id="file-upload" type="file" name="upload" multiple="multiple" required>
 					<br>
 					<br>
 					<label for="log-that-bird" class="custom-file-upload">Log That Bird!</label>
