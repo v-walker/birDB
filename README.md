@@ -5,7 +5,7 @@ A birdwatching journal and social media site.
 - Share your sightings with others.
 - Chat with others who have similar interests!
 
-![Login Page](img/Screen-Shot-2021-11-09-at-10.53.07-AM.png)
+![Login Page](public/img/Screen-Shot-2021-11-09-at-10.53.07-AM.png)
 
 ## Tech Stack
 - Languages:
@@ -34,7 +34,7 @@ A birdwatching journal and social media site.
 - Use EJS and partials for templating.
 - Implement chat functionality using socket.io.
 
-![Main Page](img/Screen-Shot-2021-11-09-at-10.53.39-AM.png)
+![Main Page](public/img/Screen-Shot-2021-11-09-at-10.53.39-AM.png)
 
 ## Stretch Goals
 - Use GoogleMaps or another mapping API to display location data.
@@ -46,7 +46,7 @@ A birdwatching journal and social media site.
 
 ## Screenshots
 
-![Mobile Responsiveness](img/Screen-Shot-2021-11-09-at-10.57.23-AM.png)
+![Mobile Responsiveness](public/img/Screen-Shot-2021-11-09-at-10.57.23-AM.png)
 
 ## Developers
 
