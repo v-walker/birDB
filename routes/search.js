@@ -47,32 +47,14 @@ router.get("/search", gatekeeper, async(req, res) => {
         }
         console.log(postsQuery);
 
-        // let postsQueryDates = getDates(postsQuery);
+        
+        // let postsQueryDates = await getDates(postsQuery);
         let postsQueryUsernames = await arrayIterator(postsQuery, getUsername);
-
+        
         // query users table by searchString for username; return result to front-end
-        // let userQueryArray = []
-
         // let userQueryData = getUserQuery(search)
-        // console.log(userQuery);
-        // let userQueryData;
-        // if (userQuery.length >= 1) {
-        //     userQueryData = {userID: userQuery.dataValues.id, username: userQuery.dataValues.username}
-        // }
 
         let {recentPosts, dates, usernames} = await getRecentPostData(date);
-        // let recentPosts = await db.posts.findAll({
-        //     where: {
-        //         createdAt: {
-        //             [Op.gte]: date
-        //         }
-        //     },
-        //     limit: 2,
-        //     order: [['id', 'DESC']]
-        // });
-
-
-        // let usernames = await arrayIterator(recentPosts, getUsername);
         let followingIDList = (record.following !== null)? record.following.split(','): [];
         let following = await arrayIterator(followingIDList, getFollowingUsers);
         
