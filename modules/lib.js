@@ -101,4 +101,16 @@ const getRecentPostData = (date) => {
     })
 };
 
+// function getUserQuery(search) {
+//     return new Promise(async (res, _rej) => {
+//         try {
+//             let userQuery = await db.users.findAll({where: {username: search}});
+//             let userObj = {id: result.id, username: result.username};
+//             res(userObj);
+//         } catch(err) {
+//             console.log(err);
+//         }
+//     })
+// };
+
 module.exports = {monthNames, getUsername, getFollowingUsers, getDates, getRecentPosts, arrayIterator, getIndividualPostData, getRecentPostData};
