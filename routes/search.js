@@ -34,7 +34,7 @@ router.get("/search", gatekeeper, async(req, res) => {
         console.log(postsQuery);
 
         
-        // let postsQueryDates = await getDates(postsQuery);
+        // let postsQueryDates = getDates(postsQuery);
         let postsQueryUsernames = await arrayIterator(postsQuery, getUsername);
         
         // query users table by searchString for username; return result to front-end
