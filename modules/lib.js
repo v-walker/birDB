@@ -101,4 +101,8 @@ const getRecentPostData = (date) => {
     })
 };
 
+// const getPosts = () => {
+
+// }
+
 module.exports = {monthNames, getUsername, getFollowingUsers, getDates, getRecentPosts, arrayIterator, getIndividualPostData, getRecentPostData};
