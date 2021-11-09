@@ -71,7 +71,7 @@ post.addEventListener('click', async (e) => {
             headers
         }).then(window.location.assign('/'))
     }
-    if(e.target.className === 'fas fa-pencil-alt add-follow'){
+    if(e.target.className === 'fas fa-user-plus add-follow'){
         let id = e.target.id;
         fetch(`/user/${posterID}`, {
             method: "put",

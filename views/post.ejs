@@ -31,7 +31,7 @@
 										<li>
 											<button class="button btn" type='submit'>
 												<span>
-													<i id='<%= post.id %>' class="fas fa-pencil-alt add-follow"></i>
+													<i id='<%= post.id %>' class="fas fa-user-plus add-follow"></i>
 												</span>
 											</button>
 									</li>
@@ -71,16 +71,16 @@
 												<div  id="default-state-<%= comments[i].id %>" >
 												<p id='<%= comments[i].id %>' class="comments-contents"><%= comments[i].contents %> </p>
 												<% if (username == comments[i].username) { %>
-															<button class="button btn" type='submit'>
-																<span>
-																	<i id='<%= comments[i].id %>' class="fas fa-trash"></i>
-																</span>
-															</button>
-														<button  class="button btn">
-															<span>
-																<i id='<%= comments[i].id %>' class="fas fa-pencil-alt"></i>
-															</span>
-														</button>
+													<button  class="button btn">
+														<span>
+															<i id='<%= comments[i].id %>' class="fas fa-pencil-alt"></i>
+														</span>
+													</button>
+													<button class="button btn" type='submit'>
+														<span>
+															<i id='<%= comments[i].id %>' class="fas fa-trash"></i>
+														</span>
+													</button>
 													</div>
 												
 												<div id="edit-state-<%= comments[i].id %>" class="invisible">
@@ -102,8 +102,6 @@
 														</div>
 													</div> 
 											</div>
-												<% } else { %>
-													<a href="#" class="reply mt20"><i class="arrow_back"></i></a>
 												<% } %>
 											</div>
 										</li>
