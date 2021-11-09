@@ -11,23 +11,39 @@
 			<div class="row">
                 <!-- posts -->
 				<div class="col-sm-8" id="append-posts">
-					<!-- <%- include ('partials/blogSkeleton.ejs') %> -->
+					<article class="mb80">
+						<div class="cdf-post relative pl70">
+							<h3>Posts Matching Your Search: [<%= postsQuery.length %>]</h3>
+						</div>
+					</article>
+					
+					<% for( let i = 0; i < postsQuery.length; i++ ) { %>
+						<article class="mb80">
+							<div class="cdf-post relative pl70">
+								<div class="cdf-image"><img src="<%= postsQuery[i].imgURL %>" width="650px" height="auto" alt="">
+									
+								</div>
+								<div class="cdf-content pt20 pl50">
+									<div class="cdf-title mb15"><h2><a href="/post/<%= postsQuery[i].id %>"><%= postsQuery[i].title %></a></h2></div>
+									<div class="cdf-text"><p><a href="/user/<%= postsQuery[i].userID %>"><%= postsQueryUsernames[i] %></a></p></div>
+									<div class="cdf-btn cdf-btn-one mt20"><a href="/post/<%= postsQuery[i].id %>">read more</a></div>
+								</div>
+							</div>
+						</article>
+					<% } %>
 				</div>
-                <!-- users -->
-                <div class="col-sm-8" id="append-users">
-                    <!-- user query data here -->
-                </div>
+                
 				<div class="col-sm-4">
 					<div class="side-bar">
 						<div class="search side-bar-widget">
-							<form action="#" method="get" class="side-bar-search newsletter">
-								<input type="text" class="" placeholder="Search">
+							<form action="/search" method="GET" class="side-bar-search newsletter" id="searchForm">
+								<input type="text" class="searchInput" placeholder="Search" name="search">
 								<button type="submit"><i class="icon_search"></i></button>
 							</form>
 						</div>
 						<!-- search -->
-						<!-- <%- include ('partials/followingSkeleton.ejs') %>
-						<%- include ('partials/recentSkeleton.ejs') %> -->
+						<%- include ('partials/followingSkeleton.ejs') %>
+						<%- include ('partials/recentSkeleton.ejs') %>
 					
 						<!-- search -->
 					</div>
