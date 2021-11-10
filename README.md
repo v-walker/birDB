@@ -3,8 +3,8 @@
 [link to deployed site]()
 
 ### Test user/login information for demonstration
-email: test@birdb.com
-password: test2021
+email: test@email.com
+password: test
 
 A birdwatching journal and social media site. 
 - View recent bird sightings.
