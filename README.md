@@ -1,6 +1,6 @@
 # birDB
 
-***[link to deployed site]()***
+***[link to deployed site](http://birdb.io/)***
 
 A birdwatching journal and social media site. 
 - View recent bird sightings.
@@ -139,5 +139,6 @@ Andrew Hatch:
 ---
 ## Test user/login information for demonstration
 
+***[link to deployed site](http://birdb.io/)***
 - email: *test@email.com*
 - password: *test*
