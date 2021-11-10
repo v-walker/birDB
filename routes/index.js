@@ -63,9 +63,9 @@ router.put('/user/:userPostsID', gatekeeper, async (req,res) => {
     let dates = [];
     let date = new Date();
     let unsplitFollowing = record.following
-    let followingIDList = unsplitFollowing.split(',');
+    let followingIDList = (unsplitFollowing !== null)? unsplitFollowing.split(','): [];
     if(!followingIDList.includes(userPostsID)){
-        if (record.following){
+        if (unsplitFollowing){
             unsplitFollowing += `,${userPostsID}`
         } else {
             unsplitFollowing = userPostsID
@@ -79,7 +79,7 @@ router.put('/user/:userPostsID', gatekeeper, async (req,res) => {
 
     let recentPosts = await db.posts.findAll({where: {userID: userPostsID} });
     let updatedFollowing = updatedRecord.following
-    let updatedFollowingList = updatedFollowing.split(',')
+    let updatedFollowingList = (updatedFollowing !== null)? updatedFollowing.split(','): []
     console.log(updatedFollowingList);
     let usernames = await arrayIterator(recentPosts, getUsername);
     // if (followingIDList.includes(userPostsID) !== true){
