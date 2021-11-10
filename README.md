@@ -1,6 +1,13 @@
 # birDB
+
+[link to deployed site]()
+
+### Test user/login information for demonstration
+email: test@birdb.com
+password: test2021
+
 A birdwatching journal and social media site. 
-- Learn about birds sighted in your region.
+- View recent bird sightings.
 - Add field notes and images to your personal birdwatching journal.
 - Share your sightings with others.
 - Chat with others who have similar interests!
@@ -23,20 +30,23 @@ A birdwatching journal and social media site.
     - Sequelize
     - PostgreSQL
     - Beekeeper
-    - socket.io
+    - Socket.io
     - Git
     - Github
 
 ## MVP
 - Build a responsive website that allows for personal journaling and sharing of birdwatching details with others. 
 - Use PostgreSQL and multiple database tables for data management.
-- Use APIs to pull random bird images and scientific names for birds to be entered into the database.
+- Use Cloudinary API for image upload and storage.
 - Use EJS and partials for templating.
 - Implement chat functionality using socket.io.
+- Implement search functionality to search posts by common name and scientific name of birds.
 
 ![Main Page](public/img/Screen-Shot-2021-11-09-at-10.53.39-AM.png)
 
 ## Stretch Goals
+- Implement search functionality for querying usernames and locations.
+- Implement admin dashboard.
 - Use GoogleMaps or another mapping API to display location data.
 - Add in travel options for planning birdwatching outings.
 
