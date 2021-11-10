@@ -1,10 +1,6 @@
 # birDB
 
-[link to deployed site]()
-
-### Test user/login information for demonstration
-email: test@email.com
-password: test
+***[link to deployed site]()***
 
 A birdwatching journal and social media site. 
 - View recent bird sightings.
@@ -14,6 +10,7 @@ A birdwatching journal and social media site.
 
 ![Login Page](public/img/Screen-Shot-2021-11-09-at-10.53.07-AM.png)
 
+---
 ## Tech Stack
 - Languages:
     - Javascript
@@ -34,6 +31,8 @@ A birdwatching journal and social media site.
     - Git
     - Github
 
+---
+
 ## MVP
 - Build a responsive website that allows for personal journaling and sharing of birdwatching details with others. 
 - Use PostgreSQL and multiple database tables for data management.
@@ -44,20 +43,24 @@ A birdwatching journal and social media site.
 
 ![Main Page](public/img/Screen-Shot-2021-11-09-at-10.53.39-AM.png)
 
+---
 ## Stretch Goals
 - Implement search functionality for querying usernames and locations.
 - Implement admin dashboard.
 - Use GoogleMaps or another mapping API to display location data.
 - Add in travel options for planning birdwatching outings.
 
+---
 ## Code Snippets
 
 [Code Snippets Here]
 
+---
 ## Screenshots
 
 ![Mobile Responsiveness](public/img/Screen-Shot-2021-11-09-at-10.57.23-AM.png)
 
+---
 ## Developers
 
 Victoria Walker: 
@@ -84,3 +87,9 @@ Andrew Hatch:
 - https://github.com/AMHatch
 - Login, registration, about, and chat pages
 - Authentication
+
+---
+## Test user/login information for demonstration
+
+- email: *test@email.com*
+- password: *test*
