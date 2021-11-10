@@ -1,12 +1,16 @@
 # birDB
+
+***[link to deployed site](http://birdb.io/)***
+
 A birdwatching journal and social media site. 
-- Learn about birds sighted in your region.
+- View recent bird sightings.
 - Add field notes and images to your personal birdwatching journal.
 - Share your sightings with others.
 - Chat with others who have similar interests!
 
 ![Login Page](public/img/Screen-Shot-2021-11-09-at-10.53.07-AM.png)
 
+---
 ## Tech Stack
 - Languages:
     - Javascript
@@ -23,31 +27,88 @@ A birdwatching journal and social media site.
     - Sequelize
     - PostgreSQL
     - Beekeeper
-    - socket.io
+    - Socket.io
     - Git
     - Github
+
+---
 
 ## MVP
 - Build a responsive website that allows for personal journaling and sharing of birdwatching details with others. 
 - Use PostgreSQL and multiple database tables for data management.
-- Use APIs to pull random bird images and scientific names for birds to be entered into the database.
+- Use Cloudinary API for image upload and storage.
 - Use EJS and partials for templating.
 - Implement chat functionality using socket.io.
+- Implement search functionality to search posts by common name and scientific name of birds.
 
 ![Main Page](public/img/Screen-Shot-2021-11-09-at-10.53.39-AM.png)
 
+---
 ## Stretch Goals
+- Implement search functionality for querying usernames and locations.
+- Implement admin dashboard.
 - Use GoogleMaps or another mapping API to display location data.
 - Add in travel options for planning birdwatching outings.
 
+---
 ## Code Snippets
 
-[Code Snippets Here]
+```
+const express = require("express");
+const router = express.Router()
+const gatekeeper = require('../auth');
+const formidable = require('formidable');
+const cloudinary = require("cloudinary");
+const db = require('../models');
+const path = require("path")
+const fs = require("fs")
+require('dotenv').config()
 
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET
+});
+
+router.get("/create", gatekeeper, async (req, res) => {
+
+    let record = await db.users.findByPk(req.user.id)
+    res.render("create",
+    {
+        username: record.username,
+        userID: record.id
+    }
+    )
+})
+
+router.post('/create', gatekeeper, async (req, res, next) => {
+    let userID = req.user.id
+    const form = new formidable.IncomingForm();
+    let uploadFolder = path.join(__dirname, "../public", "files")
+    form.uploadDir = uploadFolder
+    form.parse(req, async (err, fields, files) => {
+        if (err) {
+            next()
+            return
+        }
+         precipitation: fields.precip, temperature: fields.temp, cloudCover: fields.cloud, observation: fields.observation, likes: "0", userID: userID, imgURL: "www.bird.com"})
+        cloudinary.uploader.upload(files.upload.filepath, async result => {
+            await db.posts.create({title: fields.title, commonName: fields.common, scientificName: fields.scientific, location: fields.location, precipitation: fields.precip, temperature: fields.temp, cloudCover: fields.cloud, observation: fields.observation, likes: "0", userID: userID, imgURL: result.secure_url})
+        })
+        fs.unlinkSync(files.upload.filepath);
+    });
+    res.redirect("/")
+});
+
+module.exports = router
+```
+
+---
 ## Screenshots
 
 ![Mobile Responsiveness](public/img/Screen-Shot-2021-11-09-at-10.57.23-AM.png)
 
+---
 ## Developers
 
 Victoria Walker: 
@@ -74,3 +135,10 @@ Andrew Hatch:
 - https://github.com/AMHatch
 - Login, registration, about, and chat pages
 - Authentication
+
+---
+## Test user/login information for demonstration
+
+***[link to deployed site](http://birdb.io/)***
+- email: *test@email.com*
+- password: *test*
